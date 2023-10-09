@@ -79,6 +79,7 @@ std::ostream & operator<<(std::ostream &os, Suit suit) {
   os << SUIT_NAMES[suit];
   return os;
 }
+// test
 
 //REQUIRES If any input is read, it must be a valid suit
 //EFFECTS Reads a Suit from a stream, for example "Spades" -> SPADES

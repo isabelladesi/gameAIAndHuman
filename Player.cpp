@@ -3,6 +3,7 @@
 #include <cassert>
 #include <string>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
@@ -10,8 +11,28 @@ using namespace std;
 //   assert(false);
 // }
 
-ostream & operator<<(ostream &os, const Player &p) {
-  assert(false);
+
+
+void sortHand_byRank_ascending(vector<Card> hand){
+    vector<Card> hand_Sorted;
+    int n = hand.size();
+    bool swapped;
+    for (int i = 0; i < n - 1; i++) {
+        swapped = false;
+        for (int j = 0; j < n - i - 1; j++) {
+            if (hand.at(j).get_rank() > hand.at(j+1).get_rank()) {
+              	// Card temp = hand.at(j);
+              	// hand.at(j) = hand.at(j+1);
+                // hand.at(j+1) = temp;
+                swap(hand.at(j), hand.at(j+1));
+                swapped = true;
+            }
+        }
+        if (swapped == false)
+            break;
+    }
+  //  return hand_Sorted;
+
 }
 
 class SimplePlayer : public Player{
@@ -20,8 +41,8 @@ class SimplePlayer : public Player{
     //SimplePlayer(const string& player_name): Player() {}    //pass hand size to be 5??
     //does player_name name matter? cause it works if player_name is just name. which do i return player_name or name? r they the same?
 
-    SimplePlayer(const std::string& name) : player_name(name) {
-    hand.resize(5);
+    SimplePlayer(string name) : player_name(name) {
+   // hand.resize(5);
     }
 
     const string & get_name() const override{
@@ -32,6 +53,7 @@ class SimplePlayer : public Player{
     void add_card(const Card &c) override{
         // add requires asset?
         hand.push_back(c);
+        sort(hand.begin(), hand.end());
     }
 
     bool make_trump (const Card &upcard, bool is_dealer,int round, Suit &order_up_suit) const override{
@@ -57,9 +79,7 @@ class SimplePlayer : public Player{
                 order_up_suit = upcardSuit;
                 return true;
             }
-            // else{
-            //     return false;
-            // }
+       
         } //get suit takes in trump suit as an input
 
         else if(round == 2){
@@ -80,9 +100,7 @@ class SimplePlayer : public Player{
                 order_up_suit = Suit_next(upcardSuit); //order up any suit
                 return true;
             }
-            // else{
-            //     return false;
-            // }
+          
 
 
         }
@@ -91,104 +109,77 @@ class SimplePlayer : public Player{
 
     void add_and_discard(const Card &upcard) override{
         assert(hand.size() >=1);
-        hand.pop_back();
-        hand.push_back(upcard);
+        hand.erase(hand.begin());
+        hand.push_back(upcard); //any card?
+        sort(hand.begin(), hand.end());
 
     }
 
     Card lead_card(Suit trump) override{
         assert(hand.size() >=1);
         Card leadCard;
-        Card trumpLeadCard;
+
         Card currentCard;
         Suit currentCardSuit;
-        int rank;
-        int highestRank = 0;
-        int trumpHighestRank = 0;
-        int numTrumpCardsInHand = 0;
+    
         int indexLeadCard;
-        int indexTrumpLeadCard;
+  
 
         //traversing the hand
-        for (int i=0; i < hand.size(); i++){
+        for (int i=hand.size()-1; i>-1; i--){
                 currentCard = hand.at(i);
                 currentCardSuit = currentCard.get_suit();
-                rank = currentCard.get_rank();
 
                 if(currentCardSuit != trump){
-                    if (rank > highestRank){
-                        highestRank = rank;
-                        leadCard = currentCard;
-                        indexLeadCard = i;
-                    }
+                    indexLeadCard = i;
+                    leadCard = currentCard;
+
+                    hand.erase(hand.begin() + indexLeadCard);
+                    return leadCard;
+      
                 }
-                else{
-                    numTrumpCardsInHand++;
-                    if(rank > trumpHighestRank){
-                        trumpHighestRank = rank;
-                        trumpLeadCard = currentCard;
-                        indexTrumpLeadCard = i;
-                    }
-                }
+     
             }
 
-            if(numTrumpCardsInHand == hand.size()){ //all cards in hand are trump cards
-                hand.erase(hand.begin() + indexTrumpLeadCard);
-                return trumpLeadCard;
-            }
-            else {
-                hand.erase(hand.begin() + indexLeadCard);
-                return leadCard;
-            }
 
+            leadCard = hand.at(hand.size()-1);
+            hand.erase(hand.begin() + hand.size()-1);
+            return leadCard;
+            
             //test: highest rank being at edges. diff orders of trump and nontrump cards
     }
 
     Card play_card(const Card &led_card, Suit trump) override{
         assert(hand.size() >=1);
         Card playCard;
-        Card playCardDiffSuit;
-        Card leadCard = lead_card(trump);
-        Suit leadCardSuit = leadCard.get_suit();
+
+        Suit leadCardSuit = led_card.get_suit();
         Card currentCard;
         Suit currentCardSuit;
-        int rank;
-        int highestRankSameSuit = 0;
-        int indexSameSuit;
-        int numOfDiffSuitCards;
-        int lowestRankDiffSuit = 15;
-        int indexLowestDiffSuitCard;
+
+
+        int indexPlayCard;
+
+      //  sortHand_byRank_ascending(hand);
         
-        for (int i=0; i < hand.size(); i++){
+        for (int i=hand.size()-1; i>-1; i--){
             currentCard = hand.at(i);
             currentCardSuit = currentCard.get_suit();
-            rank = currentCard.get_rank();
+          //  rank = currentCard.get_rank();
             if(currentCardSuit == leadCardSuit){
-                if(rank > highestRankSameSuit){
-                    highestRankSameSuit = rank;
-                    playCard = currentCard;
-                    indexSameSuit = i;
-                }
+                indexPlayCard = i;
+                playCard = currentCard;
+
+                hand.erase(hand.begin() + indexPlayCard);
+                return playCard;
             }
-            else{
-                numOfDiffSuitCards++;
-                if(rank < lowestRankDiffSuit){
-                        lowestRankDiffSuit = rank;
-                        playCardDiffSuit = currentCard;
-                        indexLowestDiffSuitCard = i;
-                    }
-            }
+    
 
         }
-        //player does not have same suit as lead card in their hand, so plays lowest card
-        if(numOfDiffSuitCards == hand.size()){ 
-            hand.erase(hand.begin() + indexLowestDiffSuitCard);
-            return playCardDiffSuit;
-        }
-        else {
-            hand.erase(hand.begin() + indexSameSuit);
-            return playCard;
-        }
+        playCard = hand.at(0);
+        hand.erase(hand.begin() + hand.size()-1);
+        
+        return playCard;
 
     }
 
@@ -199,13 +190,44 @@ class SimplePlayer : public Player{
 
 };
 
+ostream & operator<<(ostream &os, const Player &p) {
+  os << p.get_name();
+  return os;
+}
+
 class HumanPlayer : public Player{
     public:
-    
-   
+
+
 
     HumanPlayer(const string& name) : player_name(name) {
-    hand.resize(5);
+  //  hand.resize(5);
+    }
+    const string & get_name() const override{
+        return player_name;
+
+    }
+    void add_card(const Card &c) override{
+        // add requires asset?
+        hand.push_back(c);
+        sort(hand.begin(), hand.end());
+    }
+    bool make_trump (const Card &upcard, bool is_dealer,int round, Suit &order_up_suit) const override{
+        assert(false);
+    }
+
+    void add_and_discard(const Card &upcard) override{
+        assert(hand.size() >=1);
+        hand.erase(hand.begin());
+        hand.push_back(upcard); //any card?
+        sort(hand.begin(), hand.end());
+
+    }
+    Card lead_card(Suit trump) override{
+        assert(false);
+    }
+    Card play_card(const Card &led_card, Suit trump) override{
+        assert(false);
     }
 
     private:
@@ -224,6 +246,8 @@ class HumanPlayer : public Player{
 //     // hand is initialized as an empty vector of const Card objects.
 // }
 
+
+
 Player * Player_factory(const std::string &name, 
                         const std::string &strategy) {
   // We need to check the value of strategy and return 
@@ -233,9 +257,9 @@ Player * Player_factory(const std::string &name,
     return new SimplePlayer(name);
   }
   // Repeat for each other type of Player
-//   if (strategy == "Human") {
-//     return new HumanPlayer(name);
-//   }  
+  if (strategy == "Human") {
+    return new HumanPlayer(name);
+  }  
   // Invalid strategy if we get here
   assert(false);
   return nullptr;

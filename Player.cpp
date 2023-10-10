@@ -17,8 +17,12 @@ ostream & operator<<(ostream &os, const Player &p) {
 class SimplePlayer : public Player{
     public:
     
-    SimplePlayer(const string player_name): Player() {}    //pass hand size to be 5??
+    //SimplePlayer(const string& player_name): Player() {}    //pass hand size to be 5??
     //does player_name name matter? cause it works if player_name is just name. which do i return player_name or name? r they the same?
+
+    SimplePlayer(const std::string& name) : player_name(name) {
+    hand.resize(5);
+    }
 
     const string & get_name() const override{
         return player_name;
@@ -27,7 +31,7 @@ class SimplePlayer : public Player{
     
     void add_card(const Card &c) override{
         // add requires asset?
-        hand.push_back(&c);
+        hand.push_back(c);
     }
 
     bool make_trump (const Card &upcard, bool is_dealer,int round, Suit &order_up_suit) const override{
@@ -41,7 +45,7 @@ class SimplePlayer : public Player{
         if (round == 1){
             //traversing the hand
             for (int i=0; i < hand.size(); i++){
-                currentCard = *hand.at(i);
+                currentCard = hand.at(i);
                 currentCardSuit = currentCard.get_suit();
                 if(currentCardSuit == upcardSuit && currentCard.is_face_or_ace() == true){
                     valuableCards++;
@@ -60,7 +64,7 @@ class SimplePlayer : public Player{
 
         else if(round == 2){
             for (int i=0; i < hand.size(); i++){
-                currentCard = *hand.at(i);
+                currentCard = hand.at(i);
                 currentCardSuit = currentCard.get_suit();
 
                 if(currentCardSuit == Suit_next(upcardSuit) && currentCard.is_face_or_ace() == true){
@@ -88,7 +92,7 @@ class SimplePlayer : public Player{
     void add_and_discard(const Card &upcard) override{
         assert(hand.size() >=1);
         hand.pop_back();
-        hand.push_back(&upcard);
+        hand.push_back(upcard);
 
     }
 
@@ -107,7 +111,7 @@ class SimplePlayer : public Player{
 
         //traversing the hand
         for (int i=0; i < hand.size(); i++){
-                currentCard = *hand.at(i);
+                currentCard = hand.at(i);
                 currentCardSuit = currentCard.get_suit();
                 rank = currentCard.get_rank();
 
@@ -156,7 +160,7 @@ class SimplePlayer : public Player{
         int indexLowestDiffSuitCard;
         
         for (int i=0; i < hand.size(); i++){
-            currentCard = *hand.at(i);
+            currentCard = hand.at(i);
             currentCardSuit = currentCard.get_suit();
             rank = currentCard.get_rank();
             if(currentCardSuit == leadCardSuit){
@@ -190,12 +194,35 @@ class SimplePlayer : public Player{
 
     private:
     const string player_name; 
-    vector<const Card *> hand;
+    vector<Card> hand;
+    //vector<const Card *> hand;
 
 };
 
-//  void SimplePlayer::SimplePlayer(const std::string& player_name, vector<Card> v, int playersHand ){
+class HumanPlayer : public Player{
+    public:
+    
+   
+
+    HumanPlayer(const string& name) : player_name(name) {
+    hand.resize(5);
+    }
+
+    private:
+    const string player_name; 
+    vector<Card> hand;
+    //vector<const Card *> hand;
+
+};
+
+//  void SimplePlayer(const std::string& player_name, vector<Card> v, int playersHand ){
+//     playerName(player_name);
 //  }
+// SimplePlayer::SimplePlayer(const std::string& name) : player_name(name) {
+//     hand.resize(5);
+//     // The constructor initializes playerName with the provided name.
+//     // hand is initialized as an empty vector of const Card objects.
+// }
 
 Player * Player_factory(const std::string &name, 
                         const std::string &strategy) {

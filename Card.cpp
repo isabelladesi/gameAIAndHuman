@@ -269,7 +269,7 @@ bool operator==(const Card &lhs, const Card &rhs){
 //EFFECTS Returns true if lhs is not the same card as rhs.
 //  Does not consider trump.
 bool operator!=(const Card &lhs, const Card &rhs){
-  return lhs == rhs;
+  return !(lhs == rhs);
 }
 
 // these dont work yet but uncomment them

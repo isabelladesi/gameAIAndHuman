@@ -88,6 +88,7 @@ std::istream & operator>>(std::istream &is, Suit &suit) {
     suit = string_to_suit(str);
   }
   return is;
+  //hi
 }
 
 

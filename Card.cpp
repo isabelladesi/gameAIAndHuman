@@ -105,3 +105,72 @@ std::istream & operator>>(std::istream &is, Suit &suit) {
 //   operator>=
 //   operator==
 //   operator!=
+
+//EFFECTS Prints Card to stream, for example "Two of Spades"
+std::ostream & operator<<(std::ostream &os, const Card &card){
+  os << card.get_rank() << " of " << card.get_suit(); //send output to "os"
+  return os; //don't forget to return "os"
+}
+
+//EFFECTS Reads a Card from a stream in the format "Two of Spades"
+//NOTE The Card class declares this operator>> "friend" function,
+//     which means it is allowed to access card.rank and card.suit.
+std::istream & operator>>(std::istream &is, Card &card){
+  Rank rank = static_cast<Rank>(card.get_rank());
+  Suit suit = static_cast<Suit>(card.get_suit());
+  std::string of;
+  is >> rank >> of >> suit; //send output to "os"
+  return is; //don't forget to return "os"
+}
+
+//EFFECTS Returns true if lhs is lower value than rhs.
+//  Does not consider trump.
+bool operator<(const Card &lhs, const Card &rhs){
+  return !(lhs >= rhs);
+}
+
+//EFFECTS Returns true if lhs is lower value than rhs or the same card as rhs.
+//  Does not consider trump.
+bool operator<=(const Card &lhs, const Card &rhs){
+  return lhs < rhs || lhs == rhs;
+}
+
+//EFFECTS Returns true if lhs is higher value than rhs.
+//  Does not consider trump.
+bool operator>(const Card &lhs, const Card &rhs){
+  return !(lhs <= rhs);
+}
+
+//EFFECTS Returns true if lhs is higher value than rhs or the same card as rhs.
+//  Does not consider trump.
+bool operator>=(const Card &lhs, const Card &rhs){
+  return !(lhs < rhs);
+}
+
+//EFFECTS Returns true if lhs is same card as rhs.
+//  Does not consider trump.
+bool operator==(const Card &lhs, const Card &rhs){
+  return !(lhs < rhs || lhs > rhs);
+}
+
+//EFFECTS Returns true if lhs is not the same card as rhs.
+//  Does not consider trump.
+bool operator!=(const Card &lhs, const Card &rhs){
+  return lhs == rhs;
+}
+
+// these dont work yet but uncomment them
+// //EFFECTS returns the next suit, which is the suit of the same color
+// Suit Suit_next(Suit suit){
+
+// }
+
+// //EFFECTS Returns true if a is lower value than b.  Uses trump to determine
+// // order, as described in the spec.
+// bool Card_less(const Card &a, const Card &b, Suit trump){
+
+// }
+
+// //EFFECTS Returns true if a is lower value than b.  Uses both the trump suit
+// //  and the suit led to determine order, as described in the spec.
+// bool Card_less(const Card &a, const Card &b, const Card &led_card, Suit trump);

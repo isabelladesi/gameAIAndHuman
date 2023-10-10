@@ -118,18 +118,18 @@ std::istream & operator>>(std::istream &is, Suit &suit) {
   }
 
   //EFFECTS Returns the rank
-  Rank Card::get_rank(){
+  Rank Card::get_rank() const{
     return rank;
   }
 
   //EFFECTS Returns the suit.  Does not consider trump.
-  Suit Card::get_suit(){
+  Suit Card::get_suit() const{
     return suit;
   }
 
   //EFFECTS Returns the suit
   //HINT: the left bower is the trump suit!
-  Suit Card::get_suit(Suit trump){
+  Suit Card::get_suit(Suit trump) const{
     if (is_left_bower(trump)){
       return trump;
     }
@@ -169,7 +169,7 @@ std::istream & operator>>(std::istream &is, Suit &suit) {
 
   //EFFECTS Returns true if card is the Jack of the next suit
   bool Card::is_left_bower(Suit trump) const{
-    if (rank == JACK && suit_next(suit) == trump){
+    if (rank == JACK && Suit_next(suit) == trump){
       return true;
     }
     else{
@@ -325,7 +325,7 @@ bool Card_less(const Card &a, const Card &b, Suit trump){
 //EFFECTS Returns true if a is lower value than b.  Uses both the trump suit
 //  and the suit led to determine order, as described in the spec.
 bool Card_less(const Card &a, const Card &b, const Card &led_card, Suit trump){
-  if(a.get_suit() = led_card.get_suit()){
+  if(a.get_suit() == led_card.get_suit()){
 
   }
   if(a.get_suit(trump) == trump && b.get_suit(trump) == trump){

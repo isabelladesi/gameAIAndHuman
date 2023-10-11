@@ -8,7 +8,7 @@
   // NOTE: The standard order is the same as that in pack.in.
   // NOTE: Do NOT use pack.in in your implementation of this function
   Pack::Pack(){
-    
+
 
   }
 
@@ -25,7 +25,7 @@
   // REQUIRES: cards remain in the Pack
   // EFFECTS: Returns the next card in the pack and increments the next index
   Card Pack::deal_one(){
-
+    return ;
   }
 
   // EFFECTS: Resets next index to first card in the Pack
@@ -42,5 +42,5 @@
 
   // EFFECTS: returns true if there are no more cards left in the pack
   bool Pack::empty() const{
-
+    return;
   }

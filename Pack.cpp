@@ -8,8 +8,9 @@
   // NOTE: The standard order is the same as that in pack.in.
   // NOTE: Do NOT use pack.in in your implementation of this function
   Pack::Pack(){
-
-
+    for (card.get_suit() = SPADES; suit <= DIAMONDS; suit ++ ){
+      sort(card.get_rank());
+    }
   }
 
   // REQUIRES: pack_input contains a representation of a Pack in the

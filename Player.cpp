@@ -13,27 +13,27 @@ using namespace std;
 
 
 
-void sortHand_byRank_ascending(vector<Card> hand){
-    vector<Card> hand_Sorted;
-    int n = hand.size();
-    bool swapped;
-    for (int i = 0; i < n - 1; i++) {
-        swapped = false;
-        for (int j = 0; j < n - i - 1; j++) {
-            if (hand.at(j).get_rank() > hand.at(j+1).get_rank()) {
-              	// Card temp = hand.at(j);
-              	// hand.at(j) = hand.at(j+1);
-                // hand.at(j+1) = temp;
-                swap(hand.at(j), hand.at(j+1));
-                swapped = true;
-            }
-        }
-        if (swapped == false)
-            break;
-    }
+// void sortHand_byRank_ascending(vector<Card> hand){
+//     vector<Card> hand_Sorted;
+//     int n = hand.size();
+//     bool swapped;
+//     for (int i = 0; i < n - 1; i++) {
+//         swapped = false;
+//         for (int j = 0; j < n - i - 1; j++) {
+//             if (hand.at(j).get_rank() > hand.at(j+1).get_rank()) {
+//               	// Card temp = hand.at(j);
+//               	// hand.at(j) = hand.at(j+1);
+//                 // hand.at(j+1) = temp;
+//                 swap(hand.at(j), hand.at(j+1));
+//                 swapped = true;
+//             }
+//         }
+//         if (swapped == false)
+//             break;
+//     }
   //  return hand_Sorted;
 
-}
+//}
 
 class SimplePlayer : public Player{
     public:
@@ -51,7 +51,6 @@ class SimplePlayer : public Player{
     }
     
     void add_card(const Card &c) override{
-        // add requires asset?
         hand.push_back(c);
         sort(hand.begin(), hand.end());
     }

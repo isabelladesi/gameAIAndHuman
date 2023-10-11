@@ -1,4 +1,5 @@
 #include "Pack.hpp"
+#include "Card.hpp"
 
 
   // EFFECTS: Initializes the Pack to be in the following standard order:

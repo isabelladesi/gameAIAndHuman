@@ -182,7 +182,6 @@ TEST(test_player_make_trump_dealer_round2) {
   Card jack_diamonds(JACK, DIAMONDS); //upcard is king of diamonds
   bool did_bob_make_trump = bob->make_trump(jack_diamonds, is_dealer,2,upCard_suit);
   
-  // Verify the card Bob played
   ASSERT_EQUAL(true, did_bob_make_trump);
   delete bob;
 }

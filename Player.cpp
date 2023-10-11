@@ -150,6 +150,7 @@ class SimplePlayer : public Player{
 
     Card play_card(const Card &led_card, Suit trump) override{
         assert(hand.size() >=1);
+        sort(hand.begin(), hand.end());
         Card playCard;
 
         Suit leadCardSuit = led_card.get_suit();

@@ -1,8 +1,4 @@
 #include "Pack.hpp"
-void Pack::reset() {
-  assert(false);
-  assert(next); // DELETEME: avoid error "private field is not used"
-}
 
 
   // EFFECTS: Initializes the Pack to be in the following standard order:
@@ -11,14 +7,19 @@ void Pack::reset() {
   //          in order from lowest to highest rank, and so on.
   // NOTE: The standard order is the same as that in pack.in.
   // NOTE: Do NOT use pack.in in your implementation of this function
-  Pack::Pack();
+  Pack::Pack(){
+    
+
+  }
 
   // REQUIRES: pack_input contains a representation of a Pack in the
   //           format required by the project specification
   // MODIFIES: pack_input
   // EFFECTS: Initializes Pack by reading from pack_input.
   Pack::Pack(std::istream& pack_input){
-
+    for (int i = 0; i < 52; i++){
+      std::istream & operator>>(std::istream pack_input, Card &i);
+    }
   }
 
   // REQUIRES: cards remain in the Pack
@@ -41,5 +42,5 @@ void Pack::reset() {
 
   // EFFECTS: returns true if there are no more cards left in the pack
   bool Pack::empty() const{
-      return Pack.empty();
+
   }

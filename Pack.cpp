@@ -1,4 +1,5 @@
 #include "Pack.hpp"
+#include <cassert>
 void Pack::reset() {
   assert(false);
   assert(next); // DELETEME: avoid error "private field is not used"
@@ -11,7 +12,7 @@ void Pack::reset() {
   //          in order from lowest to highest rank, and so on.
   // NOTE: The standard order is the same as that in pack.in.
   // NOTE: Do NOT use pack.in in your implementation of this function
-  Pack::Pack();
+  Pack::Pack(){}
 
   // REQUIRES: pack_input contains a representation of a Pack in the
   //           format required by the project specification
@@ -41,5 +42,5 @@ void Pack::reset() {
 
   // EFFECTS: returns true if there are no more cards left in the pack
   bool Pack::empty() const{
-      return Pack.empty();
+    
   }

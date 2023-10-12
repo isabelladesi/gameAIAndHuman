@@ -8,8 +8,12 @@
   // NOTE: The standard order is the same as that in pack.in.
   // NOTE: Do NOT use pack.in in your implementation of this function
   Pack::Pack(){
-    for (card.get_suit() = SPADES; suit <= DIAMONDS; suit ++ ){
-      sort(card.get_rank());
+    for (int s = SPADES; s <= DIAMONDS; ++s) {
+      Suit suit = static_cast<Suit>(s);
+
+      for (int r = TWO; r <= ACE; ++r) {
+      Rank rank = static_cast<Rank>(r);
+      }
     }
   }
 
@@ -18,8 +22,10 @@
   // MODIFIES: pack_input
   // EFFECTS: Initializes Pack by reading from pack_input.
   Pack::Pack(std::istream& pack_input){
-    for (int i = 0; i < 52; i++){
-      std::istream & operator>>(std::istream pack_input, Card &i);
+    Card i;
+    int x = 0;
+    while (pack_input >> i){
+      cards[x] = i;
     }
   }
 

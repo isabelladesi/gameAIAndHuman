@@ -14,7 +14,7 @@
 
       for (int r = TWO; r <= ACE; ++r) {
         Rank rank = static_cast<Rank>(r);
-          cards[x] = r;
+          cards[x] = rank;
           x = x+1;
       }
     }
@@ -56,5 +56,5 @@
 
   // EFFECTS: returns true if there are no more cards left in the pack
   bool Pack::empty() const{
-    return;
+    return true;
   }

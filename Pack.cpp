@@ -9,11 +9,14 @@
   // NOTE: The standard order is the same as that in pack.in.
   // NOTE: Do NOT use pack.in in your implementation of this function
   Pack::Pack(){
+    int x = 0;
     for (int s = SPADES; s <= DIAMONDS; ++s) {
       Suit suit = static_cast<Suit>(s);
 
       for (int r = TWO; r <= ACE; ++r) {
-      Rank rank = static_cast<Rank>(r);
+        Rank rank = static_cast<Rank>(r);
+          cards[x] = rank;
+          x = x+1;
       }
     }
   }
@@ -26,14 +29,17 @@
     Card i;
     int x = 0;
     while (pack_input >> i){
-      cards[x] = i;
+        cards[x] = i;
+        x = x + 1;
+      }
     }
-  }
 
   // REQUIRES: cards remain in the Pack
   // EFFECTS: Returns the next card in the pack and increments the next index
   Card Pack::deal_one(){
-    return ;
+      Card dealOne = cards[next];
+      next = next + 1;
+      return dealOne;
   }
 
   // EFFECTS: Resets next index to first card in the Pack
@@ -46,9 +52,10 @@
   //          https://en.wikipedia.org/wiki/In_shuffle.
   void Pack::shuffle(){
 
+
   }
 
   // EFFECTS: returns true if there are no more cards left in the pack
   bool Pack::empty() const{
-    return;
+    return true;
   }

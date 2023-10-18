@@ -325,9 +325,6 @@ bool Card_less(const Card &a, const Card &b, Suit trump){
 //EFFECTS Returns true if a is lower value than b.  Uses both the trump suit
 //  and the suit led to determine order, as described in the spec.
 bool Card_less(const Card &a, const Card &b, const Card &led_card, Suit trump){
-  if(a.get_suit() == led_card.get_suit()){
-
-  }
   if(a.get_suit(trump) == trump && b.get_suit(trump) == trump){
     if (a.get_rank() < b.get_rank()){
       return true;
@@ -344,6 +341,23 @@ bool Card_less(const Card &a, const Card &b, const Card &led_card, Suit trump){
   }
   else if(b.get_suit(trump) == trump){
     return true;
+  }
+  else if(a.get_suit() == led_card.get_suit() || b.get_suit() == led_card.get_suit()){
+    if (a.get_suit(trump) == trump && b.get_suit() == led_card.get_suit()){
+      return false;
+    }
+    else if (b.get_suit(trump) == trump && a.get_suit() == led_card.get_suit()){
+      return true;
+    }
+    else if (a.get_suit() == led_card.get_suit()){
+      return false;
+    }
+    else if (b.get_suit() == led_card.get_suit()){
+      return true;
+    }
+    else{
+      return false;
+    }
   }
   else{
     if (a < b){

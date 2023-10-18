@@ -11,13 +11,15 @@
   // NOTE: Do NOT use pack.in in your implementation of this function
   Pack::Pack(){
     int x = 0;
+    next = 0;
     for (int s = SPADES; s <= DIAMONDS; ++s) {
       Suit suit = static_cast<Suit>(s);
 
       for (int r = TWO; r <= ACE; ++r) {
         Rank rank = static_cast<Rank>(r);
-          cards[x] = rank;
-          x = x+1;
+        Card rankSuit = Card(rank, suit);
+        cards[x] = rankSuit;
+        x = x+1;
       }
     }
   }
@@ -38,22 +40,22 @@
   // REQUIRES: cards remain in the Pack
   // EFFECTS: Returns the next card in the pack and increments the next index
   Card Pack::deal_one(){
-      Card dealOne = cards[next];
-      next = next + 1;
-      return dealOne;
+    Card dealOne = cards[next];
+    next = next + 1;
+    return dealOne;
   }
 
   // EFFECTS: Resets next index to first card in the Pack
   void Pack::reset(){
-
+    next = 0;
   }
 
   // EFFECTS: Shuffles the Pack and resets the next index. This
   //          performs an in shuffle seven times. See
   //          https://en.wikipedia.org/wiki/In_shuffle.
   void Pack::shuffle(){
-    Card pack1[cards.size()/2];
-    Card pack2[cards.size()/2];
+    Card pack1[PACK_SIZE/2];
+    Card pack2[PACK_SIZE/2];
     int j=0;
 
 
@@ -72,11 +74,14 @@
       }
     }
     next = 0;   
-
-
   }
 
   // EFFECTS: returns true if there are no more cards left in the pack
   bool Pack::empty() const{
-    return true;
+    if (next == 25){
+      return true;
+    }
+    else{
+      return false;
+    }
   }

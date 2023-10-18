@@ -1,5 +1,6 @@
 #include "Pack.hpp"
 #include "Card.hpp"
+#include <array>
 
 
   // EFFECTS: Initializes the Pack to be in the following standard order:
@@ -51,6 +52,26 @@
   //          performs an in shuffle seven times. See
   //          https://en.wikipedia.org/wiki/In_shuffle.
   void Pack::shuffle(){
+    Card pack1[cards.size()/2];
+    Card pack2[cards.size()/2];
+    int j=0;
+
+
+    for(int i=0; i<cards.size()/2; i++){
+      pack1[i] = cards[i];
+      pack2[i] = cards[i+cards.size()/2];
+    }
+
+    for(int nShuffle=0; nShuffle<7; nShuffle++){
+      while (j<cards.size()/2){
+        for(int i=0; i<cards.size(); i=i+2){
+          cards[i] = pack2[j];
+          cards[i+1]= pack1[j];
+          j++;
+        }
+      }
+    }
+    next = 0;   
 
 
   }

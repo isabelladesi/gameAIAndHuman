@@ -39,7 +39,8 @@ class SimplePlayer : public Player{
     public:
     
     //SimplePlayer(const string& player_name): Player() {}    //pass hand size to be 5??
-    //does player_name name matter? cause it works if player_name is just name. which do i return player_name or name? r they the same?
+    //does player_name name matter? cause it works if player_name is just name. 
+    //which do i return player_name or name? r they the same?
 
     SimplePlayer(string name) : player_name(name) {
    // hand.resize(5);
@@ -55,7 +56,8 @@ class SimplePlayer : public Player{
         sort(hand.begin(), hand.end());
     }
 
-    bool make_trump (const Card &upcard, bool is_dealer,int round, Suit &order_up_suit) const override{
+    bool make_trump (const Card &upcard, bool is_dealer,
+        int round, Suit &order_up_suit) const override{
         assert(round == 1 || round ==2);
 
         Suit upcardSuit = upcard.get_suit();
@@ -86,7 +88,8 @@ class SimplePlayer : public Player{
                 currentCard = hand.at(i);
                 currentCardSuit = currentCard.get_suit();
 
-                if(currentCardSuit == Suit_next(upcardSuit) && currentCard.is_face_or_ace() == true){
+                if(currentCardSuit == Suit_next(upcardSuit) && 
+                currentCard.is_face_or_ace() == true){
                     valuableCards++;
                 }
             }
@@ -145,7 +148,8 @@ class SimplePlayer : public Player{
             hand.erase(hand.begin() + hand.size()-1);
             return leadCard;
             
-            //test: highest rank being at edges. diff orders of trump and nontrump cards
+            //test: highest rank being at edges. diff orders of trump 
+            //and nontrump cards
     }
 
     Card play_card(const Card &led_card, Suit trump) override{
@@ -212,7 +216,8 @@ class HumanPlayer : public Player{
         hand.push_back(c);
         sort(hand.begin(), hand.end());
     }
-    bool make_trump (const Card &upcard, bool is_dealer,int round, Suit &order_up_suit) const override{
+    bool make_trump (const Card &upcard, bool is_dealer, 
+    int round, Suit &order_up_suit) const override{
         assert(false);
     }
 
@@ -237,7 +242,8 @@ class HumanPlayer : public Player{
 
 };
 
-//  void SimplePlayer(const std::string& player_name, vector<Card> v, int playersHand ){
+//  void SimplePlayer(const std::string& player_name, vector<Card> v, 
+//int playersHand ){
 //     playerName(player_name);
 //  }
 // SimplePlayer::SimplePlayer(const std::string& name) : player_name(name) {

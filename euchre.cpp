@@ -66,23 +66,20 @@ int main(int argc, char **argv) {
         return 1;
     }
 
-  Game game(POINTS_TO_WIN, SHUFFLE, NAME1, TYPE1, NAME2, TYPE2, NAME3, TYPE3, NAME4, TYPE4);
-  game.play();
+  // Game game(POINTS_TO_WIN, SHUFFLE, NAME1, TYPE1, NAME2, 
+  //TYPE2, NAME3, TYPE3, NAME4, TYPE4);
+  // game.play();
 
-  for (size_t i = 0; i < players.size(); ++i) {
-  delete players[i];
-  }
+  // for (size_t i = 0; i < players.size(); ++i) {
+  // delete players[i];
+  // }
 }
 
 class Game {
  public:
   Game(int POINTS_TO_WIN, string SHUFFLE, string NAME1, string TYPE1, string NAME2, 
-    string TYPE2, string NAME3, string TYPE3, string NAME4, string TYPE4){
-
-    }
-  void play(){
-    
-  }
+    string TYPE2, string NAME3, string TYPE3, string NAME4, string TYPE4);
+  void play();
 
  private:
   std::vector<Player*> players;
@@ -100,5 +97,7 @@ class Game {
 
 //---------------------------------------------
 
-  // argc is argument count. integer representing how many arguments were implemente din command line. ./resize.exe arg1 arg2 arg3. argc=4
-  // argv is an array of pointers that point to c style strings. if you wanna access that fist argument do:argv[1] returns a c style string
+  // argc is argument count. integer representing how many arguments were 
+  //implemente din command line. ./resize.exe arg1 arg2 arg3. argc=4
+  // argv is an array of pointers that point to c style strings. if you wanna 
+  //access that fist argument do:argv[1] returns a c style string

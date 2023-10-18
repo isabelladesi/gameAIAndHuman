@@ -77,8 +77,12 @@ int main(int argc, char **argv) {
 class Game {
  public:
   Game(int POINTS_TO_WIN, string SHUFFLE, string NAME1, string TYPE1, string NAME2, 
-    string TYPE2, string NAME3, string TYPE3, string NAME4, string TYPE4);
-  void play();
+    string TYPE2, string NAME3, string TYPE3, string NAME4, string TYPE4){
+
+    }
+  void play(){
+    
+  }
 
  private:
   std::vector<Player*> players;

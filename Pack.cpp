@@ -15,7 +15,7 @@
     for (int s = SPADES; s <= DIAMONDS; ++s) {
       Suit suit = static_cast<Suit>(s);
 
-      for (int r = TWO; r <= ACE; ++r) {
+      for (int r = NINE; r <= ACE; ++r) {
         Rank rank = static_cast<Rank>(r);
         Card rankSuit = Card(rank, suit);
         cards[x] = rankSuit;
@@ -31,6 +31,7 @@
   Pack::Pack(std::istream& pack_input){
     Card i;
     int x = 0;
+    next = 0;
     while (pack_input >> i){
         cards[x] = i;
         x = x + 1;
@@ -78,7 +79,7 @@
 
   // EFFECTS: returns true if there are no more cards left in the pack
   bool Pack::empty() const{
-    if (next == 25){
+    if (next == 24){
       return true;
     }
     else{

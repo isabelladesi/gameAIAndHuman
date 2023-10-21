@@ -31,9 +31,9 @@ using namespace std;
 //         if (swapped == false)
 //             break;
 //     }
-  //  return hand_Sorted;
+//    //return hand_Sorted;
 
-//}
+// }
 
 class SimplePlayer : public Player{
     public:
@@ -157,14 +157,19 @@ class SimplePlayer : public Player{
         sort(hand.begin(), hand.end());
         Card playCard;
 
-        Suit leadCardSuit = led_card.get_suit();
+        Suit leadCardSuit = led_card.get_suit(trump);
         Card currentCard;
         Suit currentCardSuit;
+
+        //make two for loops, one keeping track of highest following suit and one 
+        //keeping track of lowest card of not the same suit
+
+        //could make a sort that takes rank into account but "thats more complicated"
 
 
         int indexPlayCard;
 
-      //  sortHand_byRank_ascending(hand);
+        //sortHand_byRank_ascending(hand);
         
         for (int i=hand.size()-1; i>-1; i--){
             currentCard = hand.at(i);

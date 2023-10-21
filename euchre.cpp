@@ -86,19 +86,33 @@ class Game {
   Pack pack;
   // ...
 
-  void shuffle();
+  void shuffle(){
+    pack.shuffle();
+  }; 
   void deal(Pack pack, vector<Player*> players){
-    for (int i=0; i<players.size(); i++){
-      if (i%2==0){
-        players[i]->add_card(pack.deal_one()); //to player[i]
-        players[i]->add_card(pack.deal_one());
-        players[i]->add_card(pack.deal_one());
+      for (int i=0; i<players.size(); i++){ //deal round 1 
+        if (i%2==0){
+          players[i]->add_card(pack.deal_one());
+          players[i]->add_card(pack.deal_one());
+          players[i]->add_card(pack.deal_one());
+        }
+        else{
+          players[i]->add_card(pack.deal_one());
+          players[i]->add_card(pack.deal_one());
+        }
       }
-      else{
-        players[i]->add_card(pack.deal_one());
-        players[i]->add_card(pack.deal_one());
+      for (int i=0; i<players.size(); i++){ //deal round 2
+        if (i%2==0){
+          players[i]->add_card(pack.deal_one());
+          players[i]->add_card(pack.deal_one());
+        }
+        else{
+          players[i]->add_card(pack.deal_one());
+          players[i]->add_card(pack.deal_one());
+          players[i]->add_card(pack.deal_one());
+        }
       }
-    }
+      
 
   };
   void make_trump(const Card &upcard, bool is_dealer,

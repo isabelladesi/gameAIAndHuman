@@ -216,23 +216,76 @@ class HumanPlayer : public Player{
         hand.push_back(c);
         sort(hand.begin(), hand.end());
     }
+
+    void print_hand() const {
+        for (size_t i=0; i < hand.size(); ++i)
+        cout << "Human player " << player_name << "'s hand: "
+        << "[" << i << "] " << hand[i] << "\n";
+}
+
     bool make_trump (const Card &upcard, bool is_dealer, 
     int round, Suit &order_up_suit) const override{
-        assert(false);
+        print_hand();
+        cout << "Human player " << player_name << ", please enter a suit, or \"pass\":\n";
+        string decision;
+        cin >> decision;
+        if (decision != "pass") {
+            Suit ordered_up = string_to_suit(decision);
+            order_up_suit = ordered_up;
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     void add_and_discard(const Card &upcard) override{
         assert(hand.size() >=1);
-        hand.erase(hand.begin());
-        hand.push_back(upcard); //any card?
+        sort(hand.begin(), hand.end());
+        print_hand();
+        cout << "Discard upcard: [-1]\n";
+        cout << "Human player " << player_name << ", please select a card to discard:\n";
+        Card discardCard;
+        cin >> discardCard;
+        int indexDiscardCard;
+        for (int i=0; i<hand.size(); i++){
+            if (hand[i] == discardCard){
+                indexDiscardCard = i;
+            }
+        }
+        hand.erase(hand.begin() + indexDiscardCard);
+        hand.push_back(upcard); 
         sort(hand.begin(), hand.end());
 
     }
     Card lead_card(Suit trump) override{
-        assert(false);
+        print_hand();
+        cout << "Human player " << player_name << ", please select a card:\n";
+        Card ledCard;
+        cin >> ledCard;
+        int indexLedCard;
+        for (int i=0; i<hand.size(); i++){
+            if (hand[i] == ledCard){
+                indexLedCard = i;
+            }
+        }
+        hand.erase(hand.begin() + indexLedCard);
+        return ledCard;
+
     }
     Card play_card(const Card &led_card, Suit trump) override{
-        assert(false);
+        print_hand();
+        cout << "Human player " << player_name << ", please select a card:\n";
+        Card playedCard;
+        cin >> playedCard;
+        int indexPlayedCard;
+        for (int i=0; i<hand.size(); i++){
+            if (hand[i] == playedCard){
+                indexPlayedCard = i;
+            }
+        }
+        hand.erase(hand.begin() + indexPlayedCard);
+        return playedCard;
     }
 
     private:

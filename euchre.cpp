@@ -29,7 +29,7 @@ int main(int argc, char **argv) {
         cout << "Error opening " << inputFile << endl;;
         return 1;
     }
-    if (argc == 12){ //There are exactly 12 arguments, including the executable name.
+    if (!argc == 12){ //There are exactly 12 arguments, including the executable name.
         cout << "Usage: euchre.exe" << inputFile << SHUFFLE
         << POINTS_TO_WIN << NAME1 << TYPE1 << NAME2 << TYPE2 << NAME3 << TYPE3
         << NAME4 << TYPE4 << endl;
@@ -87,7 +87,20 @@ class Game {
   // ...
 
   void shuffle();
-  void deal(/* ... */);
+  void deal(Pack pack, vector<Player*> players){
+    for (int i=0; i<players.size(); i++){
+      if (i%2==0){
+        players[i]->add_card(pack.deal_one()); //to player[i]
+        players[i]->add_card(pack.deal_one());
+        players[i]->add_card(pack.deal_one());
+      }
+      else{
+        players[i]->add_card(pack.deal_one());
+        players[i]->add_card(pack.deal_one());
+      }
+    }
+
+  };
   void make_trump(const Card &upcard, bool is_dealer,
                     int round, Suit &order_up_suit);
   void play_hand(/* ... */);

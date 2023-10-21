@@ -324,11 +324,14 @@ bool Card_less(const Card &a, const Card &b, Suit trump){
 
 //EFFECTS Returns true if a is lower value than b.  Uses both the trump suit
 //  and the suit led to determine order, as described in the spec.
+
+//how do I add the left and right bower into this
 bool Card_less(const Card &a, const Card &b, const Card &led_card, Suit trump){
 
   Suit suit_a = a.get_suit(trump);
   Suit suit_b = b.get_suit(trump);
   Suit led_suit = led_card.get_suit();
+  // Suit left_bower = trump.is_left_bower();
 
   if (suit_a == trump && suit_b != trump){
     return false;

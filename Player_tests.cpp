@@ -85,7 +85,7 @@ TEST(test_player_play_card_NORMAL) {
   delete bob;
 }
 
-
+//**this test is failing**
 TEST(test_player_play_card_RBOWER) {
   // Bob's hand
   Player * bob = Player_factory("Bob", "Simple");
@@ -126,7 +126,7 @@ TEST(test_player_make_trump_NORMAL_round1) {
   ASSERT_EQUAL(false, did_bob_make_trump);
   delete bob;
 }
-
+//**this test is failing**
 TEST(test_player_make_trump_LB_round1) {
   // Bob's hand
   Player * bob = Player_factory("Bob", "Simple");

@@ -57,8 +57,7 @@
   void Pack::shuffle(){
     Card pack1[PACK_SIZE/2];
     Card pack2[PACK_SIZE/2];
-    int j=0;
-
+    int j;
 
     for(int i=0; i<cards.size()/2; i++){
       pack1[i] = cards[i];
@@ -66,12 +65,17 @@
     }
 
     for(int nShuffle=0; nShuffle<7; nShuffle++){
+      j=0;
       while (j<cards.size()/2){
         for(int i=0; i<cards.size(); i=i+2){
           cards[i] = pack2[j];
           cards[i+1]= pack1[j];
           j++;
         }
+      }
+      for(int i=0; i<cards.size()/2; i++){
+        pack1[i] = cards[i];
+        pack2[i] = cards[i+cards.size()/2];
       }
     }
     next = 0;   

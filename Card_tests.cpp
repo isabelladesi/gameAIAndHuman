@@ -121,4 +121,26 @@ TEST(test_card_suit_next) {
     ASSERT_EQUAL(HEARTS, Suit_next(suitD));
 }
 
+TEST(test_card_lessA) {
+    Card c(ACE, SPADES);
+    Card d(KING, SPADES);
+    Card a(ACE, DIAMONDS);
+    Suit trump = Suit::SPADES;
+
+    ASSERT_EQUAL(true, Card_less(d, c, trump));
+    ASSERT_EQUAL(true, Card_less(a, c, trump));
+    ASSERT_EQUAL(false, Card_less(d, a, trump));
+}
+
+// TEST(test_card_lessB) {
+//     Card c(ACE, SPADES);
+//     Card d(KING, SPADES);
+//     Card a(ACE, DIAMONDS);
+//     Suit trump = Suit::SPADES;
+
+//     ASSERT_EQUAL(true, Card_less(d, c, trump));
+//     ASSERT_EQUAL(true, Card_less(a, c, trump));
+//     ASSERT_EQUAL(false, Card_less(d, a, trump));
+// }
+
 TEST_MAIN()

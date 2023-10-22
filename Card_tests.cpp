@@ -57,11 +57,18 @@ TEST(test_card_is_trump) {
     ASSERT_EQUAL(true, b.is_trump(trump));
 }
 
-//not sure how to do this one
-// TEST(test_card_operator<<) {
-//     Card c(KING, SPADES);
-//     ASSERT_EQUAL("King of Spades", pack_input >> c);
-// }
+TEST(test_stream) {
+    Card c(KING, SPADES);
+
+    ostringstream os;
+    os << c;
+    ASSERT_EQUAL(os.str(), "King of Spades");
+
+    istringstream is("Jack of Diamonds");
+    Card b;
+    is >> b;
+    ASSERT_EQUAL(b, Card(JACK, DIAMONDS));
+}
 
 TEST(test_card_lower_value) {
     Card b(NINE, CLUBS);
@@ -70,6 +77,48 @@ TEST(test_card_lower_value) {
     Card a(NINE, DIAMONDS);
     Card d(TEN, DIAMONDS);
     ASSERT_EQUAL(true, a < d);
+}
+
+TEST(test_card_higher_value) {
+    Card b(NINE, CLUBS);
+    Card c(NINE, HEARTS);
+    ASSERT_EQUAL(true, b > c);
+    Card a(NINE, DIAMONDS);
+    Card d(TEN, DIAMONDS);
+    ASSERT_EQUAL(false, a > d);
+}
+
+TEST(test_card_higher_same_value) {
+    Card b(NINE, CLUBS);
+    Card c(NINE, HEARTS);
+    Card d(NINE, HEARTS);
+    ASSERT_EQUAL(true, c >= d);
+    ASSERT_EQUAL(false, d >= b);
+}
+
+TEST(test_card_same_value) {
+    Card c(ACE, HEARTS);
+    Card d(ACE, HEARTS);
+    ASSERT_EQUAL(true, c == d);
+}
+
+TEST(test_card_not_same_value) {
+    Card c(ACE, SPADES);
+    Card d(ACE, SPADES);
+    Card a(ACE, DIAMONDS);
+    ASSERT_EQUAL(false, c != d);
+    ASSERT_EQUAL(true, d != a);
+}
+
+TEST(test_card_suit_next) {
+    Suit suitA = Suit::SPADES;
+    Suit suitB = Suit::CLUBS;
+    Suit suitC = Suit::HEARTS;
+    Suit suitD = Suit::DIAMONDS;
+    ASSERT_EQUAL(CLUBS, Suit_next(suitA));
+    ASSERT_EQUAL(SPADES, Suit_next(suitB));
+    ASSERT_EQUAL(DIAMONDS, Suit_next(suitC));
+    ASSERT_EQUAL(HEARTS, Suit_next(suitD));
 }
 
 TEST_MAIN()

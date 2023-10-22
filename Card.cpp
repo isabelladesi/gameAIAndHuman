@@ -183,6 +183,9 @@ std::istream & operator>>(std::istream &is, Suit &suit) {
     if (suit == trump){
       return true;
     }
+    else if (is_left_bower(trump)){
+      return true;
+    }
     else{
       return false;
     }

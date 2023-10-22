@@ -29,7 +29,7 @@ int main(int argc, char **argv) {
         cout << "Error opening " << inputFile << endl;;
         return 1;
     }
-    if (!argc == 12){ //There are exactly 12 arguments, including the executable name.
+    if (!(argc == 12)){ //There are exactly 12 arguments, including the executable name.
         cout << "Usage: euchre.exe" << inputFile << SHUFFLE
         << POINTS_TO_WIN << NAME1 << TYPE1 << NAME2 << TYPE2 << NAME3 << TYPE3
         << NAME4 << TYPE4 << endl;

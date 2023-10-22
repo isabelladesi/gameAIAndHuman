@@ -30,7 +30,7 @@ TEST(test_card_face_or_ace) {
 }
 
 TEST(test_card_is_right_bower) {
-    trump = SPADES;
+    Suit trump = Suit::SPADES;
     Card c(JACK, SPADES);
     ASSERT_EQUAL(true, c.is_right_bower(trump));
     Card b(NINE, SPADES);
@@ -40,7 +40,7 @@ TEST(test_card_is_right_bower) {
 }
 
 TEST(test_card_is_left_bower) {
-    trump = HEARTS;
+    Suit trump = Suit::HEARTS;
     Card c(JACK, DIAMONDS);
     ASSERT_EQUAL(true, c.is_left_bower(trump));
     Card b(NINE, DIAMONDS);

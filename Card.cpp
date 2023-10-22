@@ -292,7 +292,10 @@ Suit Suit_next(Suit suit){
 // order, as described in the spec.
 bool Card_less(const Card &a, const Card &b, Suit trump){
 
-  if(a.get_suit(trump) == trump && b.get_suit(trump) == trump){
+  Suit suit_a = a.get_suit(trump);
+  Suit suit_b = b.get_suit(trump);
+
+  if(suit_a == trump && suit_b == trump){
     if(a.is_right_bower(trump)){
       return false;
     }
@@ -315,10 +318,10 @@ bool Card_less(const Card &a, const Card &b, Suit trump){
       return false;
     }
   }
-  else if(a.get_suit(trump) == trump){
+  else if(suit_a == trump){
     return false;
   }
-  else if(b.get_suit(trump) == trump){
+  else if(suit_b == trump){
     return true;
   }
   else{

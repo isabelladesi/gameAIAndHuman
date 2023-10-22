@@ -52,7 +52,7 @@ TEST(test_card_is_left_bower) {
 TEST(test_card_is_trump) {
     Suit trump = Suit::HEARTS;
     Card c(JACK, DIAMONDS);
-    ASSERT_EQUAL(false, c.is_trump(trump));
+    ASSERT_EQUAL(true, c.is_trump(trump));
     Card b(NINE, HEARTS);
     ASSERT_EQUAL(true, b.is_trump(trump));
 }
@@ -138,23 +138,23 @@ TEST(test_card_lessA) {
     ASSERT_EQUAL(true, Card_less(g, f, trump));
 }
 
-// TEST(test_card_lessB) {
-//     Card a(ACE, SPADES);
-//     Card b(KING, SPADES);
-//     Card c(JACK, SPADES);
-//     Card d(JACK, CLUBS);
-//     Card e(ACE, HEARTS);
-//     Card f(ACE, DIAMONDS);
-//     Card g(ACE, CLUBS);
-//     Suit trump = Suit::SPADES;
-//     Suit ledA = Suit::SPADES;
-//     Suit ledB = Suit::DIAMONDS;
+TEST(test_card_lessB) {
+    Card a(ACE, SPADES);
+    Card b(KING, SPADES);
+    Card c(JACK, SPADES);
+    Card d(JACK, CLUBS);
+    Card e(ACE, HEARTS);
+    Card f(ACE, DIAMONDS);
+    Card g(ACE, CLUBS);
+    Suit trump = Suit::SPADES;
+    Suit ledB = Suit::DIAMONDS;
+    Card cledA(ACE, ledB);
 
-//     ASSERT_EQUAL(true, Card_less(b, a, trump));
-//     ASSERT_EQUAL(true, Card_less(a, c, trump));
-//     ASSERT_EQUAL(true, Card_less(a, d, trump));
-//     ASSERT_EQUAL(true, Card_less(a, d, trump));
-//     ASSERT_EQUAL(true, Card_less(g, f, trump));
-// }
+    ASSERT_EQUAL(true, Card_less(b, a, cledA, trump));
+    ASSERT_EQUAL(true, Card_less(a, c, cledA, trump));
+    ASSERT_EQUAL(true, Card_less(a, d, cledA, trump));
+    ASSERT_EQUAL(true, Card_less(a, d, cledA, trump));
+    ASSERT_EQUAL(true, Card_less(g, f, cledA, trump));
+}
 
 TEST_MAIN()

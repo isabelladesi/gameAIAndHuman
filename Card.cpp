@@ -272,7 +272,6 @@ bool operator!=(const Card &lhs, const Card &rhs){
   return !(lhs == rhs);
 }
 
-// these dont work yet but uncomment them
 //EFFECTS returns the next suit, which is the suit of the same color
 Suit Suit_next(Suit suit){
   if (suit == HEARTS){

@@ -150,7 +150,6 @@ class Game {
         cout << player2 << " and " << player4 << " win!" << endl;
       }
     }
-  }
 
  private:
   std::vector<Player*> players;
@@ -159,7 +158,6 @@ class Game {
 
   void shuffle(){
     pack.shuffle();
-  }; 
   void deal(Pack pack, vector<Player*> players){
     for (int i=0; i<players.size(); i++){ //deal round 1 
       if (i%2==0){
@@ -218,7 +216,8 @@ class Game {
         }
       }
     }
-                    };
+  }
+  }; 
 //   void play_hand(/* ... */);
 //   // ...
 // };

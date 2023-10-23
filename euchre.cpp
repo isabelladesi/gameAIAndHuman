@@ -156,8 +156,8 @@ class Game {
   Pack pack;
   // ...
 
-  void shuffle(){
-    pack.shuffle();
+  // void shuffle(){
+  //   pack.shuffle();
   void deal(Pack pack, vector<Player*> players){
     for (int i=0; i<players.size(); i++){ //deal round 1 
       if (i%2==0){
@@ -181,9 +181,7 @@ class Game {
         players[i]->add_card(pack.deal_one());
       }
     }
-      
-
-  };
+  }
   void make_trump(Card &upcard, int dealerIndex, vector<Player*> players, int x_playersTurn){
     Suit upcardSuit = upcard.get_suit(); //suggested trump suit
     Suit order_up_suit;

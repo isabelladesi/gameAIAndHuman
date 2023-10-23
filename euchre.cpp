@@ -45,7 +45,7 @@ class Game {
       // if (leadIndex > 3){
       //   leadIndex = leadIndex - 4;
       // }
-      int winnerLastRound;
+      //int winnerLastRound;
       for (int i = 0; i < 5; i++){
         play_trick(leadIndex, trump);
         if (leadIndex % 2 == 0) {

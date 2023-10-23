@@ -35,6 +35,36 @@ using namespace std;
 
 // }
 
+vector<Card> sortReal(vector<Card> hand, Suit trump){
+    sort(hand.begin(), hand.end());
+    int indexLB=-1;
+    int indexRB=-1;
+    for(int i=0; i<hand.size(); i++){
+        if(hand[i].is_left_bower(trump)){
+            indexLB =i;
+            // hand.push_back(hand[i]);
+            // hand.erase(hand.begin() + i);
+        }
+        if (hand[i].is_right_bower(trump)){
+            indexRB=i;
+            // hand.push_back(hand[i]);
+            // hand.erase(hand.begin() + i);
+        }
+    }
+    if(indexLB!=-1){ //there is a LB
+        hand.push_back(hand[indexLB]);
+        hand.erase(hand.begin() + indexLB);
+    }
+
+    if(indexRB != -1){ //there is a RB
+        hand.push_back(hand[indexRB]);
+        hand.erase(hand.begin() + indexRB);
+    }
+
+    return hand;
+
+}
+
 class SimplePlayer : public Player{
     public:
     
@@ -71,6 +101,9 @@ class SimplePlayer : public Player{
                 currentCard = hand.at(i);
                 currentCardSuit = currentCard.get_suit();
                 if(currentCardSuit == upcardSuit && currentCard.is_face_or_ace() == true){
+                    valuableCards++;
+                }
+                else if(currentCard.is_left_bower(upcardSuit)){
                     valuableCards++;
                 }
             }
@@ -154,10 +187,11 @@ class SimplePlayer : public Player{
 
     Card play_card(const Card &led_card, Suit trump) override{
         assert(hand.size() >=1);
-        sort(hand.begin(), hand.end());
+        hand = sortReal(hand,trump);
         Card playCard;
-
         Suit leadCardSuit = led_card.get_suit(trump);
+        // Card RBower(JACK, leadCardSuit);
+        // Card LBower(JACK,);
         Card currentCard;
         Suit currentCardSuit;
 
@@ -176,12 +210,18 @@ class SimplePlayer : public Player{
             currentCardSuit = currentCard.get_suit();
           //  rank = currentCard.get_rank();
             if(currentCardSuit == leadCardSuit){
+                // if(currentCard.is_right_bower(trump)){
+
+                // }
                 indexPlayCard = i;
                 playCard = currentCard;
 
                 hand.erase(hand.begin() + indexPlayCard);
                 return playCard;
             }
+            // else{
+
+            // }
     
 
         }

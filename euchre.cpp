@@ -1,5 +1,7 @@
 #include <iostream>
 #include <fstream>
+#include <string>
+#include <vector>
 #include "Pack.hpp"
 #include "Card.hpp"
 #include "Player.hpp"
@@ -81,7 +83,7 @@ class Game {
     string TYPE2, string NAME3, string TYPE3, string NAME4, string TYPE4);
 
   //this is mainly copied so change this a lot
-  void play(int POINTS_TO_WIN, players){
+  void play(int POINTS_TO_WIN, vector<Player*> players){
     int team_points_A = 0; 
     int team_points_B = 0;
     int hand_round = 0;
@@ -89,10 +91,10 @@ class Game {
     int ordered_up = 0;
     int team_tricks_A = 0;
     int team_tricks_B = 0;
-    const std::string* player1 = &(*players[0]).get_name();
-    const std::string* player2 = &(*players[1]).get_name();
-    const std::string* player3 = &(*players[2]).get_name();
-    const std::string* player4 = &(*players[3]).get_name();
+    const string* player1 = &(*players[0]).get_name();
+    const string* player2 = &(*players[1]).get_name();
+    const string* player3 = &(*players[2]).get_name();
+    const string* player4 = &(*players[3]).get_name();
     while (team_points_A < POINTS_TO_WIN && team_points_B < POINTS_TO_WIN){
       cout << "Hand " << hand_round << endl;
       cout << (*players[dealerIndex]).get_name() << " deals"<< endl;

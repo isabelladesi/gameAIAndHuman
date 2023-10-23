@@ -42,9 +42,10 @@ class Game {
       int x_playersTurn=0;
       make_trump(upcard, dealerIndex, players, x_playersTurn);
       // playHand(team_tricks_A, team_tricks_B, dealerIndex, trump);
-      if (leadIndex > 3){
-        leadIndex = leadIndex - 4;
-      }
+      // if (leadIndex > 3){
+      //   leadIndex = leadIndex - 4;
+      // }
+      int winnerLastRound;
       for (int i = 0; i < 5; i++){
         play_trick(leadIndex, trump);
         if (leadIndex % 2 == 0) {

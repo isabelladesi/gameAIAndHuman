@@ -85,18 +85,21 @@ class Game {
     int team_points_A = 0; 
     int team_points_B = 0;
     int hand_round = 0;
-    int dealer = 0;
+    int dealerIndex = 0;
     int ordered_up = 0;
     int team_tricks_A = 0;
     int team_tricks_B = 0;
-    while (team_points_A < pointsToWin && team_points_B < pointsToWin){
+    while (team_points_A < POINTS_TO_WIN && team_points_B < POINTS_TO_WIN){
       cout << "Hand " << hand_round << endl;
-      cout << (*players[dealer]).get_name() << " deals"<< endl;
+      cout << (*players[dealerIndex]).get_name() << " deals"<< endl;
       shuffle();
-      deal(dealer);
+      deal(pack, players);
       Suit trump;
-      make_trump(trump, dealer, ordered_up);
-      playHand(team_tricks_A, team_tricks_B, dealer, trump);
+      Card upcard = pack.deal_one();
+      cout << upcard << " turned up" << endl;
+      int x_playersTurn;
+      make_trump(trump, dealerIndex, ordered_up, x_playersTurn);
+      playHand(team_tricks_A, team_tricks_B, dealerIndex, trump);
       if (team_tricks_A > team_tricks_B){
         print0Winners(team_tricks_A, ordered_up, team_points_A);
       } 
@@ -104,20 +107,20 @@ class Game {
         print1Winners(team_tricks_B, ordered_up, team_points_B);
       }
     hand_round = hand_round + 1;
-    dealer = dealer + 1;
-    if (dealer > 3) //what does this thing mean --> {dealer -=4;}
+    dealerIndex = dealerIndex + 1;
+    if (dealerIndex > 3) {//what does this thing mean --> {dealer -=4;}
       // printScore(team_points_A,team_points_B);
       cout << (*players[0]).get_name() << " and " << (*players[2]).get_name()   
       << " have " << team_points_A << " points" << endl;
       cout << (*players[1]).get_name() << " and "<< (*players[3]).get_name() 
       << " have " << team_points_B << " points" << "\n" << endl;
-  }
-    }
+    }    
     // printGameResults(team_points_A, team_points_B);
     if (team_points_A > team_points_B){
       cout << (*players[0]).get_name() << " and " 
         << (*players[2]).get_name() << " win!" << endl;
-    } else {
+    } 
+    else {
       cout << (*players[1]).get_name() << " and " 
         << (*players[3]).get_name() << " win!" << endl;
     }
@@ -132,33 +135,64 @@ class Game {
     pack.shuffle();
   }; 
   void deal(Pack pack, vector<Player*> players){
-      for (int i=0; i<players.size(); i++){ //deal round 1 
-        if (i%2==0){
-          players[i]->add_card(pack.deal_one());
-          players[i]->add_card(pack.deal_one());
-          players[i]->add_card(pack.deal_one());
-        }
-        else{
-          players[i]->add_card(pack.deal_one());
-          players[i]->add_card(pack.deal_one());
-        }
+    for (int i=0; i<players.size(); i++){ //deal round 1 
+      if (i%2==0){
+        players[i]->add_card(pack.deal_one());
+        players[i]->add_card(pack.deal_one());
+        players[i]->add_card(pack.deal_one());
       }
-      for (int i=0; i<players.size(); i++){ //deal round 2
-        if (i%2==0){
-          players[i]->add_card(pack.deal_one());
-          players[i]->add_card(pack.deal_one());
-        }
-        else{
-          players[i]->add_card(pack.deal_one());
-          players[i]->add_card(pack.deal_one());
-          players[i]->add_card(pack.deal_one());
-        }
+      else{
+        players[i]->add_card(pack.deal_one());
+        players[i]->add_card(pack.deal_one());
       }
+    }
+    for (int i=0; i<players.size(); i++){ //deal round 2
+      if (i%2==0){
+        players[i]->add_card(pack.deal_one());
+        players[i]->add_card(pack.deal_one());
+      }
+      else{
+        players[i]->add_card(pack.deal_one());
+        players[i]->add_card(pack.deal_one());
+        players[i]->add_card(pack.deal_one());
+      }
+    }
       
 
   };
-  void make_trump(const Card &upcard, bool is_dealer,
-                    int round, Suit &order_up_suit);
+  void make_trump(Card &upcard, int dealerIndex, vector<Player*> players, int x_playersTurn){
+    Suit upcardSuit = upcard.get_suit(); //suggested trump suit
+    Suit order_up_suit;
+    bool is_dealer=false;
+    int currentPlayer = dealerIndex; //is dealer alwyas player 0? does it change with rounds?
+    for(int round = 1; round <3; round++){
+      for(int i=0; i< players.size(); i++){ //changing indexes
+        currentPlayer+=1;
+        if(currentPlayer>3){
+          currentPlayer-=4;
+        }
+        if (dealerIndex == currentPlayer){
+          is_dealer == true;
+        }
+
+        if(players[currentPlayer]->make_trump(upcard, is_dealer, round, order_up_suit)==false){ //should i access players w a * here too?
+          cout << (*players[i]).get_name() << " passes" << endl;
+        }
+        else if(players[currentPlayer]->make_trump(upcard, is_dealer, round, order_up_suit)==true && round==1){
+          cout << (*players[currentPlayer]).get_name() << " orders up " << order_up_suit << endl;
+          x_playersTurn = currentPlayer;
+          (*players[dealerIndex]).add_and_discard(upcard);
+          //return;
+        }
+        else if(players[currentPlayer]->make_trump(upcard, is_dealer, round, order_up_suit)==true && round==2){
+          cout << (*players[currentPlayer]).get_name() << " orders up " << order_up_suit << endl; //does my make trump account for dealer stuff? add tests abt it?
+          x_playersTurn = currentPlayer;
+          cout << "\n";
+          //return;
+        }
+      }
+    }
+                    };
   void play_hand(/* ... */);
   // ...
 };

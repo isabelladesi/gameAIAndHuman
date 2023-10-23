@@ -84,7 +84,7 @@ int main(int argc, char **argv) {
     //   playersOfGame.push_back(playerTemp);
     // }
 
-  Game game(POINTS_TO_WIN, SHUFFLE, playersPlay, deck);
+  Game game(POINTS_TO_WIN, SHUFFLE, players, deck);
   game.play();
 
   for (size_t i = 0; i < players.size(); ++i) {

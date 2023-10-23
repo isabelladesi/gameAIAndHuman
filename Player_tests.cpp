@@ -89,16 +89,16 @@ TEST(test_player_play_card_NORMAL) {
 TEST(test_player_play_card_RBOWER) {
   // Bob's hand
   Player * bob = Player_factory("Bob", "Simple");
-  bob->add_card(Card(ACE, SPADES));
-  bob->add_card(Card(JACK, SPADES));
   bob->add_card(Card(QUEEN, SPADES));
-  bob->add_card(Card(KING, SPADES));
-  bob->add_card(Card(ACE, SPADES)); //ALL TRUMP CARDS
+  bob->add_card(Card(JACK, SPADES));
+  bob->add_card(Card(NINE, SPADES));
+  bob->add_card(Card(ACE, SPADES));
+  bob->add_card(Card(KING, SPADES)); //ALL TRUMP CARDS
 
   // Bob plays a card
-  Card nine_spades(JACK, SPADES);
+  Card seven_spades(SEVEN, SPADES);
   Card card_played = bob->play_card(
-    nine_spades,  // Nine of Spades is led
+    seven_spades,  // seven of Spades is led
     SPADES    // Trump suit
   ); 
 
@@ -139,7 +139,7 @@ TEST(test_player_make_trump_LB_round1) {
   bool is_dealer = false;
   Suit upCard_suit = Suit(DIAMONDS); //trump suit is diamonds
   
-  Card jack_diamonds(JACK, DIAMONDS); //upcard is king of diamonds
+  Card jack_diamonds(JACK, DIAMONDS); //upcard is jack of diamonds
   bool did_bob_make_trump = bob->make_trump(jack_diamonds, is_dealer,1,upCard_suit);
   
   // Verify the card Bob played

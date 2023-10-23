@@ -79,12 +79,49 @@ class Game {
  public:
   Game(int POINTS_TO_WIN, string SHUFFLE, string NAME1, string TYPE1, string NAME2, 
     string TYPE2, string NAME3, string TYPE3, string NAME4, string TYPE4);
+
+  //this is mainly copied so change this a lot
   void play();
-  //   shuffle
-  //   deal
-  //   trump
-  //   play hand
-  // }
+    int team_points_A = 0; 
+    int team_points_B = 0;
+    int hand_round = 0;
+    int dealer = 0;
+    int ordered_up = 0;
+    int team_tricks_A = 0;
+    int team_tricks_B = 0;
+    while (team_points_A < pointsToWin && team_points_B < pointsToWin){
+      cout << "Hand " << hand_round << endl;
+      cout << (*players[dealer]).get_name() << " deals"<< endl;
+      shuffle();
+      deal(dealer);
+      Suit trump;
+      make_trump(trump, dealer, ordered_up);
+      playHand(team_tricks_A, team_tricks_B, dealer, trump);
+      if (team_tricks_A > team_tricks_B){
+        print0Winners(team_tricks_A, ordered_up, team_points_A);
+      } 
+      else if (team_tricks_B > team_tricks_A){
+        print1Winners(team_tricks_B, ordered_up, team_points_B);
+      }
+    hand_round = hand_round + 1;
+    dealer = dealer + 1;
+    if (dealer > 3) //what does this thing mean --> {dealer -=4;}
+      // printScore(team_points_A,team_points_B);
+      cout << (*players[0]).get_name() << " and " << (*players[2]).get_name()   
+      << " have " << team_points_A << " points" << endl;
+      cout << (*players[1]).get_name() << " and "<< (*players[3]).get_name() 
+      << " have " << team_points_B << " points" << "\n" << endl;
+  }
+    }
+    // printGameResults(team_points_A, team_points_B);
+    if (team_points_A > team_points_B){
+      cout << (*players[0]).get_name() << " and " 
+        << (*players[2]).get_name() << " win!" << endl;
+    } else {
+      cout << (*players[1]).get_name() << " and " 
+        << (*players[3]).get_name() << " win!" << endl;
+    }
+  }
 
  private:
   std::vector<Player*> players;

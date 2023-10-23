@@ -83,7 +83,7 @@ class Game {
     string TYPE2, string NAME3, string TYPE3, string NAME4, string TYPE4);
 
   //this is mainly copied so change this a lot
-  void play(int POINTS_TO_WIN, vector<Player*> players){
+  void play(int POINTS_TO_WIN, vector<Player*> players, string SHUFFLE){
     int team_points_A = 0; 
     int team_points_B = 0;
     int hand_round = 0;
@@ -98,7 +98,7 @@ class Game {
     while (team_points_A < POINTS_TO_WIN && team_points_B < POINTS_TO_WIN){
       cout << "Hand " << hand_round << endl;
       cout << (*players[dealerIndex]).get_name() << " deals"<< endl;
-      shuffle();
+      shuffle(SHUFFLE);
       deal(pack, players);
       Suit trump;
       Card upcard = pack.deal_one();
@@ -156,7 +156,15 @@ class Game {
   Pack pack;
   // ...
 
-  // void shuffle(){
+  void shuffle(string SHUFFLE) {
+    if (SHUFFLE == "shuffle") {
+      pack.shuffle();
+    } 
+    else {
+      pack.reset();
+    } 
+    return;
+  }
   //   pack.shuffle();
   void deal(Pack pack, vector<Player*> players){
     for (int i=0; i<players.size(); i++){ //deal round 1 

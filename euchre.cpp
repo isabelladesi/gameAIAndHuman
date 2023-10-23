@@ -81,7 +81,7 @@ class Game {
     string TYPE2, string NAME3, string TYPE3, string NAME4, string TYPE4);
 
   //this is mainly copied so change this a lot
-  void play(int POINTS_TO_WIN){
+  void play(int POINTS_TO_WIN, players){
     int team_points_A = 0; 
     int team_points_B = 0;
     int hand_round = 0;
@@ -105,11 +105,32 @@ class Game {
       make_trump(upcard, dealerIndex, players, x_playersTurn);
       playHand(team_tricks_A, team_tricks_B, dealerIndex, trump);
       if (team_tricks_A > team_tricks_B){
-        print0Winners(team_tricks_A, ordered_up, team_points_A);
-      } 
-      else if (team_tricks_B > team_tricks_A){
-        print1Winners(team_tricks_B, ordered_up, team_points_B);
+        // print0Winners(team_tricks_A, ordered_up, team_points_A);
+        team_points_A = team_points_A + 1;
+        cout << player1 << " and " << player3 << " win the hand" << endl;
+        if (ordered_up % 2 != 0){
+          team_points_A = team_points_A + 1;
+          cout << "euchred!" << endl;
+        } 
+        else if (team_tricks_A == 5){
+          team_points_A = team_points_A + 1;
+          cout << "march!" << endl;
+        }
       }
+      else if (team_tricks_B > team_tricks_A){
+        // print1Winners(team_tricks_B, ordered_up, team_points_B);
+        team_points_B = team_points_B + 1;
+        cout << player2 << " and " << player4 << " win the hand" << endl;
+        if (ordered_up % 2 != 0){
+          team_points_B = team_points_B + 1;
+          cout << "euchred!" << endl;
+        } 
+        else if (team_tricks_B == 5){
+          team_points_B = team_points_B + 1;
+          cout << "march!" << endl;
+        }
+      } 
+    } 
       hand_round = hand_round + 1;
       dealerIndex = dealerIndex + 1;
       if (dealerIndex > 3) {//what does this thing mean --> {dealer -=4;}
@@ -196,9 +217,9 @@ class Game {
       }
     }
                     };
-  void play_hand(/* ... */);
-  // ...
-};
+//   void play_hand(/* ... */);
+//   // ...
+// };
 
 
 //---------------------------------------------

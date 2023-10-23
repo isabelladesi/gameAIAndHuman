@@ -286,13 +286,7 @@ class Game {
   }
   cout << endl;
 
-  vector<Player*> players;
-    // whats this?
-    // for(int i = 4; i <= 10; i += 2){
-    //   Player * playerTemp = Player_factory(argv[i],argv[i+1]);
-    //   playersOfGame.push_back(playerTemp);
-    // }
-
+  vector<Player*> players = [NAME1, NAME2, NAME3, NAME4]
   Game game(POINTS_TO_WIN, SHUFFLE, players, deck);
   game.play(POINTS_TO_WIN, players, SHUFFLE);
 

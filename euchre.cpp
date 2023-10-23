@@ -38,7 +38,8 @@ class Game {
       Suit trump;
       Card upcard = pack.deal_one();
       cout << upcard << " turned up" << endl;
-      int x_playersTurn;
+      trump = upcard.get_suit();
+      int x_playersTurn=0;
       make_trump(upcard, dealerIndex, players, x_playersTurn);
       // playHand(team_tricks_A, team_tricks_B, dealerIndex, trump);
       if (leadIndex > 3){
@@ -149,16 +150,14 @@ class Game {
         currentPlayer =(i+1+dealerIndex)%4; // ELDEST HAND FORMULA (LEFT OF DEALER)
 
         if(players[currentPlayer]->make_trump(upcard, is_dealer, round, order_up_suit)==false){ //should i access players w a * here too?
-          cout << (*players[i]).get_name() << " passes" << endl;
+          cout << players[currentPlayer]->get_name() << " passes" << endl; // (*players[i]).get_name() 
         }
         else if(players[currentPlayer]->make_trump(upcard, is_dealer, round, order_up_suit)==true && round==1){
-          cout << (*players[currentPlayer]).get_name() << " orders up " << order_up_suit << endl;
+          cout << players[currentPlayer]->get_name() << " orders up " << order_up_suit << endl;
           x_playersTurn = currentPlayer;
-          //PRINT DEALERS HAND
-         
-          players[dealerIndex]->add_and_discard(upcard);
-
           
+          //PRINT DEALERS HAND
+          players[dealerIndex]->add_and_discard(upcard);
 
           //return;
         }
@@ -177,15 +176,17 @@ class Game {
 
       Card ledCard;
       Card playedCard;
-      int leadPlayerIndex= (dealerIndex+1);
+      int leadPlayerIndex= (dealerIndex+1); //lead player only next to dealer in first round. future rounds it will be the player that wins the previous trick
       int currentPlayer;
-      ledCard = players[leadPlayerIndex]->lead_card(trump);
+      ledCard = players[leadPlayerIndex]->lead_card(trump); //same thing as playing the card //max card
+      //add to all cards played
       cout << ledCard << " led by " << endl;
-      for (int i=0; i<players.size(); i++){
+      for (int i=0; i<players.size()-1; i++){
         currentPlayer = leadPlayerIndex+1+i; //maybe???
         playedCard = (*players[currentPlayer]).play_card(ledCard,trump);
         AllCardsPlayed.push_back(playedCard);
         cout << playedCard << " played by " << (*players[currentPlayer]).get_name() << endl;
+        //track the max card in this for loop along with the name . led crad < current card ...
       }
        Card highest = AllCardsPlayed[0];
        int cardHighestIndex;
@@ -224,7 +225,7 @@ class Game {
   string NAME4 = argv[10];
   string TYPE4 = argv[11];
   //-------------------------------
-  if (!fin.is_open()) {
+  if (!fin.is_open()) { //ADD COUT STATEMENTS TO ALL OF THEM AND SEE WHICH ONES ARENT WORKING!!!!!!
     cout << "Error opening " << inputFile << endl;;
     return 1;
   }

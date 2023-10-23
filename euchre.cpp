@@ -141,16 +141,12 @@ class Game {
   void make_trump(Card &upcard, int dealerIndex, vector<Player*> players, int x_playersTurn){
     Suit order_up_suit;
     bool is_dealer=false;
-    int currentPlayer = dealerIndex; //is dealer alwyas player 0? does it change with rounds?
+   // new Player currentPlayer; //= dealerIndex; //is dealer alwyas player 0? does it change with rounds?
+    int currentPlayer;
     for(int round = 1; round <3; round++){
-      for(int i=0; i< players.size(); i++){ //changing indexes
-        currentPlayer+=1;
-        if(currentPlayer>3){
-          currentPlayer-=4;
-        }
-        if (dealerIndex == currentPlayer){
-          is_dealer = true;
-        }
+      for(int i=0; i< players.size(); i++){ //changing indexes (1+i)%4
+
+        currentPlayer =(i+1+dealerIndex)%4; // ELDEST HAND FORMULA (LEFT OF DEALER)
 
         if(players[currentPlayer]->make_trump(upcard, is_dealer, round, order_up_suit)==false){ //should i access players w a * here too?
           cout << (*players[i]).get_name() << " passes" << endl;
@@ -158,7 +154,12 @@ class Game {
         else if(players[currentPlayer]->make_trump(upcard, is_dealer, round, order_up_suit)==true && round==1){
           cout << (*players[currentPlayer]).get_name() << " orders up " << order_up_suit << endl;
           x_playersTurn = currentPlayer;
-          (*players[dealerIndex]).add_and_discard(upcard);
+          //PRINT DEALERS HAND
+         
+          players[dealerIndex]->add_and_discard(upcard);
+
+          
+
           //return;
         }
         else if(players[currentPlayer]->make_trump(upcard, is_dealer, round, order_up_suit)==true && round==2){
@@ -170,6 +171,37 @@ class Game {
       }
     }
   }
+    void play_trick(int dealerIndex, Suit trump){
+      //eldest hand index
+      vector<Card> AllCardsPlayed;
+
+      Card ledCard;
+      Card playedCard;
+      int leadPlayerIndex= (dealerIndex+1);
+      int currentPlayer;
+      ledCard = players[leadPlayerIndex]->lead_card(trump);
+      cout << ledCard << " led by " << endl;
+      for (int i=0; i<players.size(); i++){
+        currentPlayer = leadPlayerIndex+1+i; //maybe???
+        playedCard = (*players[currentPlayer]).play_card(ledCard,trump);
+        AllCardsPlayed.push_back(playedCard);
+        cout << playedCard << " played by " << (*players[currentPlayer]).get_name() << endl;
+      }
+       Card highest = AllCardsPlayed[0];
+       int cardHighestIndex;
+
+      for (int i = 1; i < 4; i++){
+        if(Card_less(highest, AllCardsPlayed[i], ledCard, trump)) {
+          highest = AllCardsPlayed[i];
+          cardHighestIndex = i;
+        }
+      }
+      int trickWinner;
+      trickWinner = (leadPlayerIndex + cardHighestIndex)%4;
+      cout << (*players[trickWinner]).get_name() << " takes the trick" << "\n" << endl;
+
+
+    }
   };
 
   int main(int argc, char **argv) {

@@ -32,7 +32,7 @@ class Game {
     const string* player4 = &(*players[3]).get_name();
     while (team_points_A < POINTS_TO_WIN && team_points_B < POINTS_TO_WIN){
       cout << "Hand " << hand_round << endl;
-      cout << (*players[dealerIndex]).get_name() << " deals"<< endl;
+      cout << players[dealerIndex]->get_name() << " deals"<< endl; //(*players[dealerIndex]).get_name()
       shuffle(SHUFFLE);
       deal(pack, players);
       Suit trump;
@@ -49,7 +49,8 @@ class Game {
         play_trick(leadIndex, trump);
         if (leadIndex % 2 == 0) {
           team_tricks_A = team_tricks_A + 1;
-        }else {
+        }
+        else {
           team_tricks_B = team_tricks_B + 1;
         }
       }
@@ -172,34 +173,46 @@ class Game {
   }
     void play_trick(int dealerIndex, Suit trump){
       //eldest hand index
-      vector<Card> AllCardsPlayed;
+      //vector<Card> AllCardsPlayed;
 
       Card ledCard;
       Card playedCard;
-      int leadPlayerIndex= (dealerIndex+1); //lead player only next to dealer in first round. future rounds it will be the player that wins the previous trick
+      
+      int leadPlayerIndex= (dealerIndex+1)%4; //lead player only next to dealer in first round. future rounds it will be the player that wins the previous trick
       int currentPlayer;
       ledCard = players[leadPlayerIndex]->lead_card(trump); //same thing as playing the card //max card
+
+      Card highest = ledCard;
+      string playerWithHighestCard;
+      int cardHighestIndex;
       //add to all cards played
       cout << ledCard << " led by " << endl;
       for (int i=0; i<players.size()-1; i++){
         currentPlayer = leadPlayerIndex+1+i; //maybe???
-        playedCard = (*players[currentPlayer]).play_card(ledCard,trump);
-        AllCardsPlayed.push_back(playedCard);
+        playedCard = (players[currentPlayer])->play_card(ledCard, trump);//(*players[currentPlayer]).play_card(ledCard,trump);
+        //AllCardsPlayed.push_back(playedCard);
         cout << playedCard << " played by " << (*players[currentPlayer]).get_name() << endl;
-        //track the max card in this for loop along with the name . led crad < current card ...
-      }
-       Card highest = AllCardsPlayed[0];
-       int cardHighestIndex;
 
-      for (int i = 1; i < 4; i++){
-        if(Card_less(highest, AllCardsPlayed[i], ledCard, trump)) {
-          highest = AllCardsPlayed[i];
-          cardHighestIndex = i;
+        //track the max card in this for loop along with the name . led crad < current card ...
+        if(Card_less(highest, playedCard, ledCard, trump)){
+          highest = playedCard;
+          playerWithHighestCard = players[currentPlayer]->get_name();
+
+
         }
       }
-      int trickWinner;
-      trickWinner = (leadPlayerIndex + cardHighestIndex)%4;
-      cout << (*players[trickWinner]).get_name() << " takes the trick" << "\n" << endl;
+      //  Card highest = AllCardsPlayed[0];
+      //  int cardHighestIndex;
+
+      // for (int i = 1; i < 4; i++){
+      //   if(Card_less(highest, AllCardsPlayed[i], ledCard, trump)) {
+      //     highest = AllCardsPlayed[i];
+      //     cardHighestIndex = i;
+      //   }
+      // }
+      // int trickWinner;
+      // trickWinner = (leadPlayerIndex + cardHighestIndex)%4;
+      cout << playerWithHighestCard << " takes the trick" << "\n" << endl;
 
 
     }
@@ -233,6 +246,7 @@ class Game {
     cout << "Usage: euchre.exe PACK_FILENAME [shuffle|noshuffle] "
      << "POINTS_TO_WIN NAME1 TYPE1 NAME2 TYPE2 NAME3 TYPE3 "
      << "NAME4 TYPE4" << endl;
+     cout << "WRONG"<<endl;
     return 1;
   }
   if (POINTS_TO_WIN < 1 || POINTS_TO_WIN > 100){

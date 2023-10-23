@@ -286,7 +286,7 @@ class Game {
   }
   cout << endl;
 
-  vector<Player*> players = [NAME1, NAME2, NAME3, NAME4]
+  vector<Player*> players = [&NAME1, &NAME2, &NAME3, &NAME4];
   Game game(POINTS_TO_WIN, SHUFFLE, players, deck);
   game.play(POINTS_TO_WIN, players, SHUFFLE);
 

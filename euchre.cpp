@@ -88,6 +88,7 @@ class Game {
     int team_points_B = 0;
     int hand_round = 0;
     int dealerIndex = 0;
+    int leadIndex = dealerIndex + 1;
     int ordered_up = 0;
     int team_tricks_A = 0;
     int team_tricks_B = 0;
@@ -105,7 +106,18 @@ class Game {
       cout << upcard << " turned up" << endl;
       int x_playersTurn;
       make_trump(upcard, dealerIndex, players, x_playersTurn);
-      playHand(team_tricks_A, team_tricks_B, dealerIndex, trump);
+      // playHand(team_tricks_A, team_tricks_B, dealerIndex, trump);
+      if (leadIndex > 3){
+        leadIndex = leadIndex - 4;
+      }
+      for (int i = 0; i < 5; i++){
+        play_trick(leadIndex, trump);
+        if (leadIndex % 2 == 0) {
+          team_tricks_A = team_tricks_A + 1;
+        }else {
+          team_tricks_B = team_tricks_B + 1;
+        }
+      }
       if (team_tricks_A > team_tricks_B){
         // print0Winners(team_tricks_A, ordered_up, team_points_A);
         team_points_A = team_points_A + 1;
@@ -135,7 +147,8 @@ class Game {
     } 
       hand_round = hand_round + 1;
       dealerIndex = dealerIndex + 1;
-      if (dealerIndex > 3) {//what does this thing mean --> {dealer -=4;}
+      if (dealerIndex > 3) {//what does this thing mean --> {
+        dealerIndex = dealerIndex - 4;
         // printScore(team_points_A,team_points_B);
         cout << player1 << " and " << player3   
         << " have " << team_points_A << " points" << endl;
@@ -191,7 +204,6 @@ class Game {
     }
   }
   void make_trump(Card &upcard, int dealerIndex, vector<Player*> players, int x_playersTurn){
-    Suit upcardSuit = upcard.get_suit(); //suggested trump suit
     Suit order_up_suit;
     bool is_dealer=false;
     int currentPlayer = dealerIndex; //is dealer alwyas player 0? does it change with rounds?

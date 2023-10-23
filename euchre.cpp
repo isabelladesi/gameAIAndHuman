@@ -45,9 +45,9 @@ class Game {
       // if (leadIndex > 3){
       //   leadIndex = leadIndex - 4;
       // }
-      //int winnerLastRound;
+      int winnerLastRound = 10;
       for (int i = 0; i < 5; i++){
-        play_trick(leadIndex, trump);
+        play_trick(dealerIndex, trump, team_points_A, team_points_B, winnerLastRound);
         if (leadIndex % 2 == 0) {
           team_tricks_A = team_tricks_A + 1;
         }
@@ -172,33 +172,40 @@ class Game {
       }
     }
   }
-    void play_trick(int dealerIndex, Suit trump){
+    void play_trick(int dealerIndex, Suit trump, int team1points, int team2points, int winnerLastRound){
       //eldest hand index
       //vector<Card> AllCardsPlayed;
 
       Card ledCard;
       Card playedCard;
-      
-      int leadPlayerIndex= (dealerIndex+1)%4; //lead player only next to dealer in first round. future rounds it will be the player that wins the previous trick
+      int leadPlayerIndex;
+      int indexOfWinningPlayer;//?****
       int currentPlayer;
-      ledCard = players[leadPlayerIndex]->lead_card(trump); //same thing as playing the card //max card
+      if (team1points ==0 && team2points==0){ //no one won previous round aka first round
+        leadPlayerIndex = (dealerIndex+1)%4; //lead player only next to dealer in first round. future rounds it will be the player that wins the previous trick
+        ledCard = players[leadPlayerIndex]->lead_card(trump); //same thing as playing the card //max card
+      }
+      // else {
+      //   leadPlayerIndex = winnerLastRound; //make a function that returns index of player who won last round and put it in the if(card_less_) statement
+      // }
 
       Card highest = ledCard;
       string playerWithHighestCard;
       int cardHighestIndex;
-      //add to all cards played
+
       cout << ledCard << " led by " << endl;
       for (int i=0; i<players.size()-1; i++){
         currentPlayer = leadPlayerIndex+1+i; //maybe???
         playedCard = (players[currentPlayer])->play_card(ledCard, trump);//(*players[currentPlayer]).play_card(ledCard,trump);
         //AllCardsPlayed.push_back(playedCard);
-        cout << playedCard << " played by " << (*players[currentPlayer]).get_name() << endl;
+        cout << playedCard << " played by " << players[currentPlayer]->get_name()<<endl; //(*players[currentPlayer]).get_name() << endl;
 
         //track the max card in this for loop along with the name . led crad < current card ...
         if(Card_less(highest, playedCard, ledCard, trump)){
           highest = playedCard;
           playerWithHighestCard = players[currentPlayer]->get_name();
-
+          //leadPlayerIndex = currentPlayer;
+          indexOfWinningPlayer = currentPlayer; // >***
 
         }
       }
@@ -286,7 +293,7 @@ class Game {
   }
   cout << endl;
 
-  vector<Player*> players = [&NAME1, &NAME2, &NAME3, &NAME4];
+  vector<Player*> players = {&NAME1, &NAME2, &NAME3, &NAME4};
   Game game(POINTS_TO_WIN, SHUFFLE, players, deck);
   game.play(POINTS_TO_WIN, players, SHUFFLE);
 

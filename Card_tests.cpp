@@ -155,6 +155,7 @@ TEST(test_card_lessB) {
     ASSERT_EQUAL(true, Card_less(a, d, cledA, trump));
     ASSERT_EQUAL(true, Card_less(a, d, cledA, trump));
     ASSERT_EQUAL(true, Card_less(g, f, cledA, trump));
+    ASSERT_EQUAL(true, Card_less(e, g, cledA, trump));
 }
 
 TEST_MAIN()

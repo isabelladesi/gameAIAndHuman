@@ -81,7 +81,7 @@ class Game {
     string TYPE2, string NAME3, string TYPE3, string NAME4, string TYPE4);
 
   //this is mainly copied so change this a lot
-  void play();
+  void play(int POINTS_TO_WIN){
     int team_points_A = 0; 
     int team_points_B = 0;
     int hand_round = 0;
@@ -89,6 +89,10 @@ class Game {
     int ordered_up = 0;
     int team_tricks_A = 0;
     int team_tricks_B = 0;
+    const std::string* player1 = &(*players[0]).get_name();
+    const std::string* player2 = &(*players[1]).get_name();
+    const std::string* player3 = &(*players[2]).get_name();
+    const std::string* player4 = &(*players[3]).get_name();
     while (team_points_A < POINTS_TO_WIN && team_points_B < POINTS_TO_WIN){
       cout << "Hand " << hand_round << endl;
       cout << (*players[dealerIndex]).get_name() << " deals"<< endl;
@@ -98,7 +102,7 @@ class Game {
       Card upcard = pack.deal_one();
       cout << upcard << " turned up" << endl;
       int x_playersTurn;
-      make_trump(trump, dealerIndex, ordered_up, x_playersTurn);
+      make_trump(upcard, dealerIndex, players, x_playersTurn);
       playHand(team_tricks_A, team_tricks_B, dealerIndex, trump);
       if (team_tricks_A > team_tricks_B){
         print0Winners(team_tricks_A, ordered_up, team_points_A);
@@ -106,23 +110,22 @@ class Game {
       else if (team_tricks_B > team_tricks_A){
         print1Winners(team_tricks_B, ordered_up, team_points_B);
       }
-    hand_round = hand_round + 1;
-    dealerIndex = dealerIndex + 1;
-    if (dealerIndex > 3) {//what does this thing mean --> {dealer -=4;}
-      // printScore(team_points_A,team_points_B);
-      cout << (*players[0]).get_name() << " and " << (*players[2]).get_name()   
-      << " have " << team_points_A << " points" << endl;
-      cout << (*players[1]).get_name() << " and "<< (*players[3]).get_name() 
-      << " have " << team_points_B << " points" << "\n" << endl;
-    }    
-    // printGameResults(team_points_A, team_points_B);
-    if (team_points_A > team_points_B){
-      cout << (*players[0]).get_name() << " and " 
-        << (*players[2]).get_name() << " win!" << endl;
-    } 
-    else {
-      cout << (*players[1]).get_name() << " and " 
-        << (*players[3]).get_name() << " win!" << endl;
+      hand_round = hand_round + 1;
+      dealerIndex = dealerIndex + 1;
+      if (dealerIndex > 3) {//what does this thing mean --> {dealer -=4;}
+        // printScore(team_points_A,team_points_B);
+        cout << player1 << " and " << player3   
+        << " have " << team_points_A << " points" << endl;
+        cout << player2 << " and "<< player4 
+        << " have " << team_points_B << " points" << endl;
+      }    
+      // printGameResults(team_points_A, team_points_B);
+      if (team_points_A > team_points_B){
+        cout << player1 << " and " << player3 << " win!" << endl;
+      } 
+      else {
+        cout << player2 << " and " << player4 << " win!" << endl;
+      }
     }
   }
 
@@ -172,7 +175,7 @@ class Game {
           currentPlayer-=4;
         }
         if (dealerIndex == currentPlayer){
-          is_dealer == true;
+          is_dealer = true;
         }
 
         if(players[currentPlayer]->make_trump(upcard, is_dealer, round, order_up_suit)==false){ //should i access players w a * here too?

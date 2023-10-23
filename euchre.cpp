@@ -18,6 +18,14 @@ int main(int argc, char **argv) {
   string SHUFFLE = argv[2];
   int POINTS_TO_WIN = atoi(argv[3]);
   Pack deck(fin);
+  string NAME1 = argv[4];
+  string TYPE1 = argv[5];
+  string NAME2 = argv[6];
+  string TYPE2 = argv[7];
+  string NAME3 = argv[8];
+  string TYPE3 = argv[9];
+  string NAME4 = argv[10];
+  string TYPE4 = argv[11];
   //-------------------------------
   if (!fin.is_open()) {
     cout << "Error opening " << inputFile << endl;;
@@ -58,6 +66,10 @@ int main(int argc, char **argv) {
      << "POINTS_TO_WIN NAME1 TYPE1 NAME2 TYPE2 NAME3 TYPE3 "
      << "NAME4 TYPE4" << endl;
     return 1;
+  }
+
+  if (!fin.good()) {
+    cout << "Error opening " << inputFile << endl;
   }
 
   for (int i = 0; i < 12; i++){

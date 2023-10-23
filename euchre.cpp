@@ -8,79 +8,86 @@
 using namespace std;
 
 int main(int argc, char **argv) {
-    //open file streams
-    ifstream fin;
+  //open file streams
+  ifstream fin;
 
-    string inputFile = argv[1]; // //
-    fin.open(inputFile);
+  string inputFile = argv[1]; // //
+  fin.open(inputFile);
   //string outputFile = argv[2]; 
 
-    string SHUFFLE = argv[2];
-    int POINTS_TO_WIN = atoi(argv[3]);
-    string NAME1 = argv[4];
-    string TYPE1 = argv[5];
-    string NAME2 = argv[6];
-    string TYPE2 = argv[7];
-    string NAME3 = argv[8];
-    string TYPE3 = argv[9];
-    string NAME4 = argv[10];
-    string TYPE4 = argv[11];
-
+  string SHUFFLE = argv[2];
+  int POINTS_TO_WIN = atoi(argv[3]);
+  Pack deck(fin);
   //-------------------------------
-    if (!fin.is_open()) {
-        cout << "Error opening " << inputFile << endl;;
-        return 1;
-    }
-    if (!(argc == 12)){ //There are exactly 12 arguments, including the executable name.
-        cout << "Usage: euchre.exe" << inputFile << SHUFFLE
-        << POINTS_TO_WIN << NAME1 << TYPE1 << NAME2 << TYPE2 << NAME3 << TYPE3
-        << NAME4 << TYPE4 << endl;
-        return 1;
-    }
-    if (POINTS_TO_WIN < 1 || POINTS_TO_WIN > 100){
-        cout << "Usage: euchre.exe" << inputFile << SHUFFLE
-        << POINTS_TO_WIN << NAME1 << TYPE1 << NAME2 << TYPE2 << NAME3 << TYPE3
-        << NAME4 << TYPE4 << endl;
-        return 1;
-    }
-    if (!(SHUFFLE == "shuffle") || !(SHUFFLE == "no shuffle")){
-        cout << "Usage: euchre.exe" << inputFile << SHUFFLE
-        << POINTS_TO_WIN << NAME1 << TYPE1 << NAME2 << TYPE2 << NAME3 << TYPE3
-        << NAME4 << TYPE4 << endl;
-        return 1;
-    }
-    if (!(TYPE1 == "Simple") || !(TYPE1 == "Human")){
-        cout << "Usage: euchre.exe" << inputFile << SHUFFLE
-        << POINTS_TO_WIN << NAME1 << TYPE1 << NAME2 << TYPE2 << NAME3 << TYPE3
-        << NAME4 << TYPE4 << endl;
-        return 1;
-    }
-    if (!(TYPE2 == "Simple") || !(TYPE2 == "Human")){
-        cout << "Usage: euchre.exe" << inputFile << SHUFFLE
-        << POINTS_TO_WIN << NAME1 << TYPE1 << NAME2 << TYPE2 << NAME3 << TYPE3
-        << NAME4 << TYPE4 << endl;
-        return 1;
-    }
-        if (!(TYPE3 == "Simple") || !(TYPE3 == "Human")){
-        cout << "Usage: euchre.exe" << inputFile << SHUFFLE
-        << POINTS_TO_WIN << NAME1 << TYPE1 << NAME2 << TYPE2 << NAME3 << TYPE3
-        << NAME4 << TYPE4 << endl;
-        return 1;
-    }
+  if (!fin.is_open()) {
+    cout << "Error opening " << inputFile << endl;;
+    return 1;
+  }
+  if (!(argc == 12)){ //There are exactly 12 arguments, including the executable name.
+    cout << "Usage: euchre.exe PACK_FILENAME [shuffle|noshuffle] "
+     << "POINTS_TO_WIN NAME1 TYPE1 NAME2 TYPE2 NAME3 TYPE3 "
+     << "NAME4 TYPE4" << endl;
+    return 1;
+  }
+  if (POINTS_TO_WIN < 1 || POINTS_TO_WIN > 100){
+    cout << "Usage: euchre.exe PACK_FILENAME [shuffle|noshuffle] "
+     << "POINTS_TO_WIN NAME1 TYPE1 NAME2 TYPE2 NAME3 TYPE3 "
+     << "NAME4 TYPE4" << endl;
+    return 1;
+  }
+  if (!(SHUFFLE == "shuffle") || !(SHUFFLE == "no shuffle")){
+    cout << "Usage: euchre.exe PACK_FILENAME [shuffle|noshuffle] "
+     << "POINTS_TO_WIN NAME1 TYPE1 NAME2 TYPE2 NAME3 TYPE3 "
+     << "NAME4 TYPE4" << endl;
+    return 1;
+  }
+  if (!(TYPE1 == "Simple") || !(TYPE1 == "Human")){
+    cout << "Usage: euchre.exe PACK_FILENAME [shuffle|noshuffle] "
+     << "POINTS_TO_WIN NAME1 TYPE1 NAME2 TYPE2 NAME3 TYPE3 "
+     << "NAME4 TYPE4" << endl;
+    return 1;
+  }
+  if (!(TYPE2 == "Simple") || !(TYPE2 == "Human")){
+    cout << "Usage: euchre.exe PACK_FILENAME [shuffle|noshuffle] "
+     << "POINTS_TO_WIN NAME1 TYPE1 NAME2 TYPE2 NAME3 TYPE3 "
+     << "NAME4 TYPE4" << endl;
+    return 1;
+  }
+  if (!(TYPE3 == "Simple") || !(TYPE3 == "Human")){
+    cout << "Usage: euchre.exe PACK_FILENAME [shuffle|noshuffle] "
+     << "POINTS_TO_WIN NAME1 TYPE1 NAME2 TYPE2 NAME3 TYPE3 "
+     << "NAME4 TYPE4" << endl;
+    return 1;
+  }
 
-  // Game game(POINTS_TO_WIN, SHUFFLE, NAME1, TYPE1, NAME2, 
-  //TYPE2, NAME3, TYPE3, NAME4, TYPE4);
-  // game.play();
+  for (int i = 0; i < 12; i++){
+    cout << argv[i] << " ";
+  }
+  cout << endl;
 
-  // for (size_t i = 0; i < players.size(); ++i) {
-  // delete players[i];
-  // }
+  vector<Player*> players;
+    // whats this?
+    // for(int i = 4; i <= 10; i += 2){
+    //   Player * playerTemp = Player_factory(argv[i],argv[i+1]);
+    //   playersOfGame.push_back(playerTemp);
+    // }
+
+  Game game(POINTS_TO_WIN, SHUFFLE, playersPlay, deck);
+  game.play();
+
+  for (size_t i = 0; i < players.size(); ++i) {
+    delete players[i];
+  }
 }
 
 class Game {
  public:
-  Game(int POINTS_TO_WIN, string SHUFFLE, string NAME1, string TYPE1, string NAME2, 
-    string TYPE2, string NAME3, string TYPE3, string NAME4, string TYPE4);
+  Game(int points_to_win, string shuffle, vector<Player*> playersPlay, Pack packPlay){
+    players = playersPlay;
+    pack = packPlay;
+    POINTS_TO_WIN = points_to_win;
+    SHUFFLE = shuffle;
+  }}
 
   //this is mainly copied so change this a lot
   void play(int POINTS_TO_WIN, vector<Player*> players, string SHUFFLE){
@@ -167,7 +174,8 @@ class Game {
  private:
   std::vector<Player*> players;
   Pack pack;
-  // ...
+  string SHUFFLE;
+  int POINTS_TO_WIN;
 
   void shuffle(string SHUFFLE) {
     if (SHUFFLE == "shuffle") {
@@ -236,10 +244,6 @@ class Game {
     }
   }
   }; 
-//   void play_hand(/* ... */);
-//   // ...
-// };
-
 
 //---------------------------------------------
 

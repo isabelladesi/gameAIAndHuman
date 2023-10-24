@@ -140,6 +140,7 @@ class Game {
   string SHUFFLE;
   int POINTS_TO_WIN;
   Card upcard;
+  Suit trump;
 
   void shuffle(string SHUFFLE) {
     if (SHUFFLE == "shuffle") {
@@ -209,7 +210,7 @@ class Game {
         else if(players[currentPlayer]->make_trump(upcard, is_dealer, round, ordered_up_suit)==true && round==1){
           cout << players[currentPlayer]->get_name() << " orders up " << ordered_up_suit << endl;
           // x_playersTurn = currentPlayer;
-          
+          trump = ordered_up_suit;
           //PRINT DEALERS HAND
           players[dealerIndex]->add_and_discard(upcard);
 
@@ -218,6 +219,7 @@ class Game {
         else {//if(players[currentPlayer]->make_trump(upcard, is_dealer, round, ordered_up_suit)==true && round==2){
           cout << players[currentPlayer]->get_name() << " orders up " << ordered_up_suit << endl; //does my make trump account for dealer stuff? add tests abt it?
           // x_playersTurn = currentPlayer;
+          trump = ordered_up_suit;
           cout << "\n";
           return;
         }
@@ -245,7 +247,7 @@ class Game {
       string playerWithHighestCard;
       //int indexOfWinningPlayer;
 
-      cout << ledCard << " led by " << endl;
+      cout << ledCard << " led by " << players[leadPlayerIndex]->get_name() << endl;
       for (int i=0; i<players.size()-1; i++){
         currentPlayer = leadPlayerIndex+1+i; //maybe???
         playedCard = (players[currentPlayer])->play_card(ledCard, trump);//(*players[currentPlayer]).play_card(ledCard,trump);

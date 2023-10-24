@@ -7,34 +7,6 @@
 
 using namespace std;
 
-// Player * Player_factory(const string &name, const string &strategy) {
-//   assert(false);
-// }
-
-
-
-// void sortHand_byRank_ascending(vector<Card> hand){
-//     vector<Card> hand_Sorted;
-//     int n = hand.size();
-//     bool swapped;
-//     for (int i = 0; i < n - 1; i++) {
-//         swapped = false;
-//         for (int j = 0; j < n - i - 1; j++) {
-//             if (hand.at(j).get_rank() > hand.at(j+1).get_rank()) {
-//               	// Card temp = hand.at(j);
-//               	// hand.at(j) = hand.at(j+1);
-//                 // hand.at(j+1) = temp;
-//                 swap(hand.at(j), hand.at(j+1));
-//                 swapped = true;
-//             }
-//         }
-//         if (swapped == false)
-//             break;
-//     }
-//    //return hand_Sorted;
-
-// }
-
 vector<Card> sortReal(vector<Card> hand, Suit trump){
     sort(hand.begin(), hand.end());
     int indexLB=-1;
@@ -67,10 +39,6 @@ vector<Card> sortReal(vector<Card> hand, Suit trump){
 
 class SimplePlayer : public Player{
     public:
-    
-    //SimplePlayer(const string& player_name): Player() {}    //pass hand size to be 5??
-    //does player_name name matter? cause it works if player_name is just name. 
-    //which do i return player_name or name? r they the same?
 
     SimplePlayer(string name) : player_name(name) {
    // hand.resize(5);
@@ -100,7 +68,8 @@ class SimplePlayer : public Player{
             for (int i=0; i < hand.size(); i++){
                 currentCard = hand.at(i);
                 currentCardSuit = currentCard.get_suit();
-                if(currentCardSuit == upcardSuit && currentCard.is_face_or_ace() == true){
+                if(currentCardSuit == upcardSuit 
+                 && currentCard.is_face_or_ace() == true){
                     valuableCards++;
                 }
                 else if(currentCard.is_left_bower(upcardSuit)){
@@ -122,7 +91,8 @@ class SimplePlayer : public Player{
                 currentCard = hand.at(i);
                 currentCardSuit = currentCard.get_suit();
 
-                if(currentCardSuit == Suit_next(upcardSuit) && currentCard.is_face_or_ace() == true){
+                if(currentCardSuit == Suit_next(upcardSuit) 
+                && currentCard.is_face_or_ace() == true){
                     valuableCards++;
                 }
             }
@@ -131,8 +101,8 @@ class SimplePlayer : public Player{
                 order_up_suit = Suit_next(upcardSuit);
                 return true;
             }
-            else if(is_dealer==true){ //screw the dealer        SHOULDNT THIS BE FIRST
-                order_up_suit = Suit_next(upcardSuit); //order up any suit
+            else if(is_dealer==true){ //screw the dealer       
+                order_up_suit = Suit_next(upcardSuit); 
                 return true;
             }
           
@@ -147,7 +117,7 @@ class SimplePlayer : public Player{
         add_card(upcard);
         Card min = Card(hand[0].get_rank(), hand[0].get_suit());
         for (int i = 0; i < hand.size(); i++) {
-                if (hand[i].is_trump(upcard.get_suit())==false){//(Card_less(highestnontrump, hand[i], trump)){
+            if (hand[i].is_trump(upcard.get_suit())==false){
                     if (hand[i]<min){
                         min = hand[i];
                     }
@@ -183,7 +153,8 @@ class SimplePlayer : public Player{
             Card highestnontrump(TWO, Suit_next(trump));
             int highestcardindex = -1;
             for (int i = 0; i < hand.size(); i++) {
-                if (hand[i].get_suit(trump) != trump && Card_less(highestnontrump, hand[i], trump)) {
+                if (hand[i].get_suit(trump) != trump 
+                 && Card_less(highestnontrump, hand[i], trump)) {
                     highestnontrump = hand[i];
                     highestcardindex = i;
                 }
@@ -218,12 +189,14 @@ class SimplePlayer : public Player{
                 hasledSuit = true;
             }
         }
-        // If a Simple Player can follow suit, they play the highest card that follows suit
+// If a Simple Player can follow suit, 
         if (hasledSuit) {
             Card highestledSuit(TWO, led_suit);
             int highestcardindex = -1;
             for (int i = 0; i < hand.size(); i++) {
-                if (hand[i].get_suit(trump) == led_suit && Card_less(highestledSuit, hand[i], led_card, trump)) {
+                if (hand[i].get_suit(trump) == led_suit 
+                && Card_less(highestledSuit, hand[i], 
+                   led_card, trump)) {
                     highestledSuit = hand[i];
                     highestcardindex = i;
                 }

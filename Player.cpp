@@ -239,10 +239,10 @@ class SimplePlayer : public Player{
             for (int i = 0; i < hand.size(); i++) {
                 if (Card_less(hand[i], lowestledSuit, trump)) {
                     lowestledSuit = hand[i];
-                    lowestledindex = i;
+                    highestledindex = i;
                 }
             }
-            hand.erase(hand.begin() + lowestledindex);
+            hand.erase(hand.begin() + highestledindex);
             return lowestledSuit;
         }
     }

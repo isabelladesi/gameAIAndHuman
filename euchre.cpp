@@ -179,7 +179,7 @@ class Game {
       Card ledCard;
       Card playedCard;
       int leadPlayerIndex;
-      int indexOfWinningPlayer;//?****
+      // int indexOfWinningPlayer;//?****
       int currentPlayer;
       if (team1points ==0 && team2points==0){ //no one won previous round aka first round
         leadPlayerIndex = (dealerIndex+1)%4; //lead player only next to dealer in first round. future rounds it will be the player that wins the previous trick
@@ -191,7 +191,7 @@ class Game {
 
       Card highest = ledCard;
       string playerWithHighestCard;
-      int cardHighestIndex;
+      // int cardHighestIndex;
 
       cout << ledCard << " led by " << endl;
       for (int i=0; i<players.size()-1; i++){
@@ -205,7 +205,7 @@ class Game {
           highest = playedCard;
           playerWithHighestCard = players[currentPlayer]->get_name();
           //leadPlayerIndex = currentPlayer;
-          indexOfWinningPlayer = currentPlayer; // >***
+          // indexOfWinningPlayer = currentPlayer; // >***
 
         }
       }
@@ -254,7 +254,6 @@ class Game {
     cout << "Usage: euchre.exe PACK_FILENAME [shuffle|noshuffle] "
      << "POINTS_TO_WIN NAME1 TYPE1 NAME2 TYPE2 NAME3 TYPE3 "
      << "NAME4 TYPE4" << endl;
-     cout << "WRONG"<<endl;
     return 1;
   }
   if (POINTS_TO_WIN < 1 || POINTS_TO_WIN > 100){
@@ -263,25 +262,25 @@ class Game {
      << "NAME4 TYPE4" << endl;
     return 1;
   }
-  if (!(SHUFFLE == "shuffle") || !(SHUFFLE == "no shuffle")){
+  if (!((SHUFFLE == "shuffle") || (SHUFFLE == "noshuffle"))){
     cout << "Usage: euchre.exe PACK_FILENAME [shuffle|noshuffle] "
      << "POINTS_TO_WIN NAME1 TYPE1 NAME2 TYPE2 NAME3 TYPE3 "
      << "NAME4 TYPE4" << endl;
     return 1;
   }
-  if (!(TYPE1 == "Simple") || !(TYPE1 == "Human")){
+  if (!((TYPE1 == "Simple") || (TYPE1 == "Human"))){
     cout << "Usage: euchre.exe PACK_FILENAME [shuffle|noshuffle] "
      << "POINTS_TO_WIN NAME1 TYPE1 NAME2 TYPE2 NAME3 TYPE3 "
      << "NAME4 TYPE4" << endl;
     return 1;
   }
-  if (!(TYPE2 == "Simple") || !(TYPE2 == "Human")){
+  if (!((TYPE2 == "Simple") || (TYPE2 == "Human"))){
     cout << "Usage: euchre.exe PACK_FILENAME [shuffle|noshuffle] "
      << "POINTS_TO_WIN NAME1 TYPE1 NAME2 TYPE2 NAME3 TYPE3 "
      << "NAME4 TYPE4" << endl;
     return 1;
   }
-  if (!(TYPE3 == "Simple") || !(TYPE3 == "Human")){
+  if (!((TYPE3 == "Simple") || (TYPE3 == "Human"))){
     cout << "Usage: euchre.exe PACK_FILENAME [shuffle|noshuffle] "
      << "POINTS_TO_WIN NAME1 TYPE1 NAME2 TYPE2 NAME3 TYPE3 "
      << "NAME4 TYPE4" << endl;
@@ -293,7 +292,11 @@ class Game {
   }
   cout << endl;
 
-  vector<Player*> players = {&NAME1, &NAME2, &NAME3, &NAME4};
+  vector<Player*> players;
+  for(int i = 4; i <= 10; i += 2){
+    Player * playerTemp = Player_factory(argv[i],argv[i+1]);
+    players.push_back(playerTemp);
+  }
   Game game(POINTS_TO_WIN, SHUFFLE, players, deck);
   game.play(POINTS_TO_WIN, players, SHUFFLE);
 

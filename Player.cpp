@@ -144,6 +144,16 @@ class SimplePlayer : public Player{
 
     void add_and_discard(const Card &upcard) override{
         assert(hand.size() >=1);
+        Card min;
+        for (int i = 0; i < hand.size(); i++) {
+                if (Card_less(highestnontrump, hand[i], trump)) {
+                    highestnontrump = hand[i];
+                    highestcardindex = i;
+                }
+            }
+            hand.erase(hand.begin() + highestcardindex);
+            return highestnontrump;
+        }
         hand.erase(hand.begin());
         add_card(upcard);
     }

@@ -145,8 +145,9 @@ class SimplePlayer : public Player{
     void add_and_discard(const Card &upcard) override{
         assert(hand.size() >=1);
         hand.erase(hand.begin());
-        hand.push_back(upcard); //any card?
-        sort(hand.begin(), hand.end());
+        add_card(upcard);
+        //hand.push_back(upcard); //any card?
+        //sort(hand.begin(), hand.end());
 
     }
 

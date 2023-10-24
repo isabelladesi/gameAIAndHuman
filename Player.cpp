@@ -144,18 +144,28 @@ class SimplePlayer : public Player{
 
     void add_and_discard(const Card &upcard) override{
         assert(hand.size() >=1);
-        Card min;
+        add_card(upcard);
+        Card min = Card(hand[0].get_rank(), hand[0].get_suit());
         for (int i = 0; i < hand.size(); i++) {
-                if (Card_less(highestnontrump, hand[i], trump)) {
-                    highestnontrump = hand[i];
-                    highestcardindex = i;
+                if (hand[i].is_trump(upcard.get_suit())==false){//(Card_less(highestnontrump, hand[i], trump)){
+                    if (hand[i]<min){
+                        min = hand[i];
+                    }
+                    
+                }
+                else{
+                    if(hand[i].get_suit() == min.get_suit()){
+                        if(hand[i].get_rank() < min.get_rank()){
+                            min = hand[i];
+                        }
+                    }
                 }
             }
-            hand.erase(hand.begin() + highestcardindex);
-            return highestnontrump;
-        }
-        hand.erase(hand.begin());
-        add_card(upcard);
+            for(int i=0; i<hand.size(); ++i){
+                if(hand[i]==min){
+                    hand.erase(hand.begin()+i);
+                }
+            }
     }
 
     Card lead_card(Suit trump) override{

@@ -34,9 +34,9 @@ class Game {
       cout << "Hand " << hand_round << endl;
       cout << players[dealerIndex]->get_name() << " deals"<< endl; //(*players[dealerIndex]).get_name()
       shuffle(SHUFFLE);
-      deal(pack, players);
+      deal(pack, players, dealerIndex);
       Suit trump;
-      Card upcard = pack.deal_one();
+      // Card upcard = pack.deal_one();
       cout << upcard << " turned up" << endl;
       trump = upcard.get_suit();
       int x_playersTurn=0;
@@ -94,10 +94,10 @@ class Game {
       }    
       // printGameResults(team_points_A, team_points_B);
       if (team_points_A > team_points_B){
-        cout << player1 << " and " << player3 << " win!" << endl;
+        cout << player1 << " and " << player3 << " win the hand" << endl;
       } 
       else {
-        cout << player2 << " and " << player4 << " win!" << endl;
+        cout << player2 << " and " << player4 << " win the hand" << endl;
       }
     }
 
@@ -107,6 +107,7 @@ class Game {
   Pack pack;
   string SHUFFLE;
   int POINTS_TO_WIN;
+  Card upcard;
 
   void shuffle(string SHUFFLE) {
     if (SHUFFLE == "shuffle") {
@@ -118,39 +119,57 @@ class Game {
     return;
   }
   //   pack.shuffle();
-  void deal(Pack pack, vector<Player*> players){
+  void deal(Pack pack1, vector<Player*> players, int indexOfDealer){ //cant i delete pack1 and just use pack private variable?
+    int currentPlayer;
+    bool hasBeenDealt = false;
     for (int i=0; i<players.size(); i++){ //deal round 1 
-      if (i%2==0){
-        players[i]->add_card(pack.deal_one());
-        players[i]->add_card(pack.deal_one());
-        players[i]->add_card(pack.deal_one());
+    currentPlayer =(i+1+indexOfDealer)%4;
+      if ((hasBeenDealt)==false){
+        players[currentPlayer]->add_card(pack1.deal_one());
+        players[currentPlayer]->add_card(pack1.deal_one());
+        players[currentPlayer]->add_card(pack1.deal_one());
+        hasBeenDealt = true;
       }
       else{
-        players[i]->add_card(pack.deal_one());
-        players[i]->add_card(pack.deal_one());
+        players[currentPlayer]->add_card(pack1.deal_one());
+        players[currentPlayer]->add_card(pack1.deal_one());
+        hasBeenDealt = false;
       }
     }
+    hasBeenDealt=false;
+    currentPlayer=0;
     for (int i=0; i<players.size(); i++){ //deal round 2
-      if (i%2==0){
-        players[i]->add_card(pack.deal_one());
-        players[i]->add_card(pack.deal_one());
+    currentPlayer =(i+1+indexOfDealer)%4;
+      if ((hasBeenDealt)==false){
+        players[currentPlayer]->add_card(pack1.deal_one());
+        players[currentPlayer]->add_card(pack1.deal_one());
+        hasBeenDealt = true;
       }
       else{
-        players[i]->add_card(pack.deal_one());
-        players[i]->add_card(pack.deal_one());
-        players[i]->add_card(pack.deal_one());
+        players[currentPlayer]->add_card(pack1.deal_one());
+        players[currentPlayer]->add_card(pack1.deal_one());
+        players[currentPlayer]->add_card(pack1.deal_one());
+        hasBeenDealt = false;
       }
     }
+    upcard = pack1.deal_one();
+
   }
   void make_trump(Card &upcard, int dealerIndex, vector<Player*> players, int x_playersTurn){
     Suit order_up_suit;
-    bool is_dealer=false;
+    bool is_dealer;
    // new Player currentPlayer; //= dealerIndex; //is dealer alwyas player 0? does it change with rounds?
     int currentPlayer;
     for(int round = 1; round <3; round++){
       for(int i=0; i< players.size(); i++){ //changing indexes (1+i)%4
 
         currentPlayer =(i+1+dealerIndex)%4; // ELDEST HAND FORMULA (LEFT OF DEALER)
+        if (players[currentPlayer] == players[dealerIndex]){
+          is_dealer = true;
+        }
+        else{
+          is_dealer = false;
+        }
 
         if(players[currentPlayer]->make_trump(upcard, is_dealer, round, order_up_suit)==false){ //should i access players w a * here too?
           cout << players[currentPlayer]->get_name() << " passes" << endl; // (*players[i]).get_name() 
@@ -162,13 +181,13 @@ class Game {
           //PRINT DEALERS HAND
           players[dealerIndex]->add_and_discard(upcard);
 
-          //return;
+          return;
         }
         else if(players[currentPlayer]->make_trump(upcard, is_dealer, round, order_up_suit)==true && round==2){
           cout << (*players[currentPlayer]).get_name() << " orders up " << order_up_suit << endl; //does my make trump account for dealer stuff? add tests abt it?
           x_playersTurn = currentPlayer;
           cout << "\n";
-          //return;
+          gitreturn;
         }
       }
     }

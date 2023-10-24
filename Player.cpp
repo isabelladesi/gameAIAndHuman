@@ -7,6 +7,7 @@
 
 using namespace std;
 
+<<<<<<< HEAD
 vector<Card> sortReal(vector<Card> hand, Suit trump){
     sort(hand.begin(), hand.end());
     int indexLB=-1;
@@ -36,6 +37,36 @@ vector<Card> sortReal(vector<Card> hand, Suit trump){
     return hand;
 
 }
+=======
+// Player * Player_factory(const string &name, const string &strategy) {
+//   assert(false);
+// }
+
+
+
+// void sortHand_byRank_ascending(vector<Card> hand){
+//     vector<Card> hand_Sorted;
+//     int n = hand.size();
+//     bool swapped;
+//     for (int i = 0; i < n - 1; i++) {
+//         swapped = false;
+//         for (int j = 0; j < n - i - 1; j++) {
+//             if (hand.at(j).get_rank() > hand.at(j+1).get_rank()) {
+//               	// Card temp = hand.at(j);
+//               	// hand.at(j) = hand.at(j+1);
+//                 // hand.at(j+1) = temp;
+//                 swap(hand.at(j), hand.at(j+1));
+//                 swapped = true;
+//             }
+//         }
+//         if (swapped == false)
+//             break;
+//     }
+//    //return hand_Sorted;
+
+// }
+
+>>>>>>> 0fc605d841d8083f8f72149a756bc918c1f6131f
 
 class SimplePlayer : public Player{
     public:
@@ -276,17 +307,17 @@ class HumanPlayer : public Player{
         print_hand();
         cout << "Discard upcard: [-1]\n";
         cout << "Human player " << player_name << ", please select a card to discard:\n";
-        Card discardCard;
+        string discardCard;
         cin >> discardCard;
-        int indexDiscardCard;
-        for (int i=0; i<hand.size(); i++){
-            if (hand[i] == discardCard){
-                indexDiscardCard = i;
+        int decision = stoi(discardCard);
+        if(decision != -1){
+            add_card(upcard);
+            hand.erase(hand.begin() + decision);
+            for(int i=decision; i < hand.size(); ++i){
+                hand[i] = hand[i+1];
             }
         }
-        hand.erase(hand.begin() + indexDiscardCard);
-        hand.push_back(upcard); 
-        sort(hand.begin(), hand.end());
+       
 
     }
     Card lead_card(Suit trump) override{

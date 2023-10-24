@@ -35,35 +35,6 @@ using namespace std;
 
 // }
 
-vector<Card> sortReal(vector<Card> hand, Suit trump){
-    sort(hand.begin(), hand.end());
-    int indexLB=-1;
-    int indexRB=-1;
-    for(int i=0; i<hand.size(); i++){
-        if(hand[i].is_left_bower(trump)){
-            indexLB =i;
-            // hand.push_back(hand[i]);
-            // hand.erase(hand.begin() + i);
-        }
-        if (hand[i].is_right_bower(trump)){
-            indexRB=i;
-            // hand.push_back(hand[i]);
-            // hand.erase(hand.begin() + i);
-        }
-    }
-    if(indexLB!=-1){ //there is a LB
-        hand.push_back(hand[indexLB]);
-        hand.erase(hand.begin() + indexLB);
-    }
-
-    if(indexRB != -1){ //there is a RB
-        hand.push_back(hand[indexRB]);
-        hand.erase(hand.begin() + indexRB);
-    }
-
-    return hand;
-
-}
 
 class SimplePlayer : public Player{
     public:
@@ -303,17 +274,17 @@ class HumanPlayer : public Player{
         print_hand();
         cout << "Discard upcard: [-1]\n";
         cout << "Human player " << player_name << ", please select a card to discard:\n";
-        Card discardCard;
+        string discardCard;
         cin >> discardCard;
-        int indexDiscardCard;
-        for (int i=0; i<hand.size(); i++){
-            if (hand[i] == discardCard){
-                indexDiscardCard = i;
+        int decision = stoi(discardCard);
+        if(decision != -1){
+            add_card(upcard);
+            hand.erase(hand.begin() + decision);
+            for(int i=decision; i < hand.size(); ++i){
+                hand[i] = hand[i+1];
             }
         }
-        hand.erase(hand.begin() + indexDiscardCard);
-        hand.push_back(upcard); 
-        sort(hand.begin(), hand.end());
+       
 
     }
     Card lead_card(Suit trump) override{

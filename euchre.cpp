@@ -184,7 +184,7 @@ class Game {
 
           return;
         }
-        else if(players[currentPlayer]->make_trump(upcard, is_dealer, round, ordered_up_suit)==true && round==2){
+        else {//if(players[currentPlayer]->make_trump(upcard, is_dealer, round, ordered_up_suit)==true && round==2){
           cout << players[currentPlayer]->get_name() << " orders up " << ordered_up_suit << endl; //does my make trump account for dealer stuff? add tests abt it?
           x_playersTurn = currentPlayer;
           cout << "\n";

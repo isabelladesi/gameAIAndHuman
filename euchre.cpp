@@ -203,15 +203,14 @@ class Game {
       int leadPlayerIndex;
       //int indexOfWinningPlayer;//?****
       int currentPlayer;
-      if (winnerLastRound==10){/
+      if (winnerLastRound==10){
         leadPlayerIndex = (dealerIndex+1)%4; 
         ledCard = players[leadPlayerIndex]->lead_card(trump); 
       }
       else {
         leadPlayerIndex = winnerLastRound;
         ledCard = players[leadPlayerIndex]->lead_card(trump);
-         //make a function that returns index of player who 
-         //won last round and put it in the if(card_less_) statement
+         
       }
 
       Card highest = ledCard;
@@ -224,7 +223,6 @@ class Game {
         currentPlayer = i % 4; //maybe???
         playedCard = (players[currentPlayer])
          ->play_card(ledCard, trump);
-        //AllCardsPlayed.push_back(playedCard);
         cout << playedCard << " played by " 
          << players[currentPlayer]->get_name()<<endl; 
 
@@ -233,8 +231,6 @@ class Game {
           highest = playedCard;
           playerWithHighestCard = players[currentPlayer]
            ->get_name();
-          //leadPlayerIndex = currentPlayer;
-          //indexOfWinningPlayer = currentPlayer; // >***
           indexOfPrevWinner = currentPlayer;
 
         }
@@ -246,18 +242,7 @@ class Game {
       else {
         team_tricks_B = team_tricks_B + 1;
       }
-      //  Card highest = AllCardsPlayed[0];
-      //  int cardHighestIndex;
-
-      // for (int i = 1; i < 4; i++){
-      //   if(Card_less(highest, AllCardsPlayed[i], ledCard, 
-      //trump)) {
-      //     highest = AllCardsPlayed[i];
-      //     cardHighestIndex = i;
-      //   }
-      // }
-      // int trickWinner;
-      // trickWinner = (leadPlayerIndex + cardHighestIndex)%4;
+      
       cout << playerWithHighestCard 
        << " takes the trick" << "\n" << endl;
 

@@ -146,19 +146,10 @@ class SimplePlayer : public Player{
         assert(hand.size() >=1);
         hand.erase(hand.begin());
         add_card(upcard);
-        //hand.push_back(upcard); //any card?
-        //sort(hand.begin(), hand.end());
-
     }
 
     Card lead_card(Suit trump) override{
         assert(hand.size() >=1);
-        // Card leadCard;
-
-        // Card currentCard;
-        // Suit currentCardSuit;
-    
-        // int indexLeadCard;
         bool hasnontrump = false;
 
         // find if it has non trump suit
@@ -167,7 +158,6 @@ class SimplePlayer : public Player{
                 hasnontrump = true;
             }
         }
-
         // if has non trump suit, play highest card in hand
         if (hasnontrump) {
             Card highestnontrump(TWO, Suit_next(trump));
@@ -195,83 +185,46 @@ class SimplePlayer : public Player{
             hand.erase(hand.begin() + highesttrumpindex);
             return highesttrump;
         }
-
-        // //traversing the hand
-        // for (int i=hand.size()-1; i>-1; i--){
-        //         currentCard = hand.at(i);
-        //         currentCardSuit = currentCard.get_suit();
-
-        //         if(currentCardSuit != trump){
-        //             indexLeadCard = i;
-        //             leadCard = currentCard;
-
-        //             hand.erase(hand.begin() + indexLeadCard);
-        //             return leadCard;
-      
-        //         }
-     
-        //     }
-
-
-        //     leadCard = hand.at(hand.size()-1);
-        //     hand.erase(hand.begin() + hand.size()-1);
-        //     return leadCard;
-            
-        //     //test: highest rank being at edges. diff orders of trump 
-        //     //and nontrump cards
     }
 
     Card play_card(const Card &led_card, Suit trump) override{
-        hand = sortReal(hand,trump);
-        Card playCard;
-        Suit leadCardSuit = led_card.get_suit(trump);
-        // Card RBower(JACK, leadCardSuit);
-        // Card LBower(JACK,);
-        Card currentCard;
-        Suit currentCardSuit;
+        assert(hand.size() >=1);
+        Card led_suit = led_card.get_suit(trump);
+        bool hasledSuit = false;
 
-        //make two for loops, one keeping track of highest following suit and one 
-        //keeping track of lowest card of not the same suit
-
-        //could make a sort that takes rank into account but "thats more complicated"
-
-
-        int indexPlayCard;
-
-        //sortHand_byRank_ascending(hand);
-        
-        for (int i=hand.size()-1; i>-1; i--){
-            currentCard = hand.at(i);
-            currentCardSuit = currentCard.get_suit();
-          //  rank = currentCard.get_rank();
-            if(currentCardSuit == leadCardSuit){
-                // if(currentCard.is_right_bower(trump)){
-
-                // }
-                indexPlayCard = i;
-                playCard = currentCard;
-
-                hand.erase(hand.begin() + indexPlayCard);
-                return playCard;
+        // find if they can follow suit
+        for (int i = 0; i < hand.size(); i++){
+            if (hand[i].get_suit(trump) == led_suit){
+                hasledSuit = true;
             }
-            // else{
-
-            // }
-    
-
         }
-        playCard = hand.at(0);
-        hand.erase(hand.begin());
-        
-        return playCard;
+        // If a Simple Player can follow suit, they play the highest card that follows suit
+        if (hasledSuit) {
+            Card highestledSuit(TWO, led_suit);
+            int highestcardindex = -1;
+            for (int i = 0; i < hand.size(); i++) {
+                if (hand[i].get_suit(trump) == led_suit && Card_less(highestledSuit, hand[i], trump, led_card)) {
+                    highestledSuit = hand[i];
+                    highestcardindex = i;
+                }
+            }
+            hand.erase(hand.begin() + highestcardindex);
+            return highestledSuit;
+        }
 
-    }
-
-    private:
-    const string player_name; 
-    vector<Card> hand;
-    //vector<const Card *> hand;
-
+        // if they cant, they play the lowest card in their hand.
+        else {
+            Card lowestledSuit(ACE, trump);
+            int highestledindex = -1;
+            for (int i = 0; i < hand.size(); i++) {
+                if (Card_less(hand[i], highestledSuit, trump)) {
+                    lowestledSuit = hand[i];
+                    highestledindex = i;
+                }
+            }
+            hand.erase(hand.begin() + lowestledindex);
+            return lowestledSuit;
+        }
 };
 
 ostream & operator<<(ostream &os, const Player &p) {

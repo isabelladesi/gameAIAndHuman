@@ -205,35 +205,35 @@ TEST(test_simple_player_not_make_trump) {
 
 TEST(test_simple_player_add_discard_all_trump) {
     // create hand for alice
-    Player * alice = Player_factory("Alice", "Simple");
-    alice->add_card(Card(TEN, SPADES));
-    alice->add_card(Card(JACK, SPADES));
-    alice->add_card(Card(QUEEN, SPADES));
-    alice->add_card(Card(KING, SPADES));
-    alice->add_card(Card(ACE, SPADES));
+    Player * bob = Player_factory("Bob", "Simple");
+    bob->add_card(Card(TEN, SPADES));
+    bob->add_card(Card(JACK, SPADES));
+    bob->add_card(Card(QUEEN, SPADES));
+    bob->add_card(Card(KING, SPADES));
+    bob->add_card(Card(ACE, SPADES));
 
     // add upcard to deck - will remove two spades
-    alice->add_and_discard(Card(TWO, SPADES));
+    bob->add_and_discard(Card(TWO, SPADES));
 
     // verify alice hand
     Card led = Card(THREE, SPADES);
 
-    Card aceSpades = Card(ACE, SPADES);
-    ASSERT_EQUAL(aceSpades ,alice->play_card(led, SPADES));
-
-    Card kingSpades = Card(KING, SPADES);
-    ASSERT_EQUAL(kingSpades ,alice->play_card(led, SPADES));
-
-    Card queenSpades = Card(QUEEN, SPADES);
-    ASSERT_EQUAL(queenSpades ,alice->play_card(led, SPADES));
-
     Card jackSpades = Card(JACK, SPADES);
-    ASSERT_EQUAL(jackSpades ,alice->play_card(led, SPADES));
-
+    Card aceSpades = Card(ACE, SPADES);
+    Card kingSpades = Card(KING, SPADES);
+    Card queenSpades = Card(QUEEN, SPADES);
     Card twoSpades = Card(TWO, SPADES);
-    ASSERT_EQUAL(twoSpades ,alice->play_card(led, SPADES));
+    ASSERT_EQUAL(jackSpades ,bob->play_card(led, SPADES));
 
-    delete alice;
+    ASSERT_EQUAL(aceSpades ,bob->play_card(led, SPADES));
+
+    ASSERT_EQUAL(kingSpades ,bob->play_card(led, SPADES));
+    
+    ASSERT_EQUAL(queenSpades ,bob->play_card(led, SPADES));
+
+    ASSERT_EQUAL(twoSpades ,bob->play_card(led, SPADES));
+
+    delete bob;
 }
 
 TEST_MAIN()

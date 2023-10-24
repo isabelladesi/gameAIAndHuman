@@ -203,11 +203,12 @@ class Game {
         else{
           is_dealer = false;
         }
-
-        if(players[currentPlayer]->make_trump(upcard, is_dealer, round, ordered_up_suit)==false){ //should i access players w a * here too?
+        bool decision = players[currentPlayer]->make_trump(upcard, is_dealer, round, ordered_up_suit);
+        
+        if(decision==false){ //should i access players w a * here too?
           cout << players[currentPlayer]->get_name() << " passes" << endl; // (*players[i]).get_name() 
         }
-        else if(players[currentPlayer]->make_trump(upcard, is_dealer, round, ordered_up_suit)==true && round==1){
+        else if(round==1){
           cout << players[currentPlayer]->get_name() << " orders up " << ordered_up_suit << endl;
           // x_playersTurn = currentPlayer;
           trump = ordered_up_suit;

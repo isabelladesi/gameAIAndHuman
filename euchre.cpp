@@ -16,6 +16,36 @@ class Game {
     SHUFFLE = shuffle;
   }
 
+  void print_winners(int team_tricks_A, int team_tricks_B, 
+   int team_points_A, int team_points_B, int ordered_up){
+    if (team_tricks_A > team_tricks_B){
+    // print0Winners(team_tricks_A, ordered_up, team_points_A);
+      team_points_A = team_points_A + 1;
+      cout << players[0]->get_name() << " and " << players[2]->get_name() << " win the hand" << endl;
+      if (ordered_up % 2 != 0){
+        team_points_A = team_points_A + 1;
+        cout << "euchred!" << endl;
+      } 
+      else if (team_tricks_A == 5){
+        team_points_A = team_points_A + 1;
+        cout << "march!" << endl;
+      }
+    }
+    else if (team_tricks_B > team_tricks_A){
+      // print1Winners(team_tricks_B, ordered_up, team_points_B);
+      team_points_B = team_points_B + 1;
+      cout << players[1]->get_name() << " and " << players[3]->get_name() << " win the hand" << endl;
+      if (ordered_up % 2 != 0){
+        team_points_B = team_points_B + 1;
+        cout << "euchred!" << endl;
+      } 
+      else if (team_tricks_B == 5){
+        team_points_B = team_points_B + 1;
+        cout << "march!" << endl;
+      }
+    }
+  }
+
   //this is mainly copied so change this a lot
   void play(int POINTS_TO_WIN, vector<Player*> players, string SHUFFLE){
     int team_points_A = 0; 
@@ -70,36 +100,38 @@ class Game {
         cout << player2 << " and " << player4 << " win the hand" << endl;
       }
     }
-
-  void print_winners(int team_tricks_A, int team_tricks_B, 
-   int team_points_A, int team_points_B, int ordered_up){
-    if (team_tricks_A > team_tricks_B){
-    // print0Winners(team_tricks_A, ordered_up, team_points_A);
-      team_points_A = team_points_A + 1;
-      cout << players[0]->get_name() << " and " << players[2]->get_name() << " win the hand" << endl;
-      if (ordered_up % 2 != 0){
-        team_points_A = team_points_A + 1;
-        cout << "euchred!" << endl;
-      } 
-      else if (team_tricks_A == 5){
-        team_points_A = team_points_A + 1;
-        cout << "march!" << endl;
-      }
-    }
-    else if (team_tricks_B > team_tricks_A){
-      // print1Winners(team_tricks_B, ordered_up, team_points_B);
-      team_points_B = team_points_B + 1;
-      cout << players[1]->get_name() << " and " << players[3]->get_name() << " win the hand" << endl;
-      if (ordered_up % 2 != 0){
-        team_points_B = team_points_B + 1;
-        cout << "euchred!" << endl;
-      } 
-      else if (team_tricks_B == 5){
-        team_points_B = team_points_B + 1;
-        cout << "march!" << endl;
-      }
-    }
   }
+
+  // void print_winners(int team_tricks_A, int team_tricks_B, 
+  //  int team_points_A, int team_points_B, int ordered_up){
+  //   if (team_tricks_A > team_tricks_B){
+  //   // print0Winners(team_tricks_A, ordered_up, team_points_A);
+  //     team_points_A = team_points_A + 1;
+  //     cout << players[0]->get_name() << " and " << players[2]->get_name() << " win the hand" << endl;
+  //     if (ordered_up % 2 != 0){
+  //       team_points_A = team_points_A + 1;
+  //       cout << "euchred!" << endl;
+  //     } 
+  //     else if (team_tricks_A == 5){
+  //       team_points_A = team_points_A + 1;
+  //       cout << "march!" << endl;
+  //     }
+  //   }
+  //   else if (team_tricks_B > team_tricks_A){
+  //     // print1Winners(team_tricks_B, ordered_up, team_points_B);
+  //     team_points_B = team_points_B + 1;
+  //     cout << players[1]->get_name() << " and " << players[3]->get_name() << " win the hand" << endl;
+  //     if (ordered_up % 2 != 0){
+  //       team_points_B = team_points_B + 1;
+  //       cout << "euchred!" << endl;
+  //     } 
+  //     else if (team_tricks_B == 5){
+  //       team_points_B = team_points_B + 1;
+  //       cout << "march!" << endl;
+  //     }
+  //   }
+  // }
+
 
  private:
   std::vector<Player*> players;

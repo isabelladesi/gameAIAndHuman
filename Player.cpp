@@ -213,7 +213,7 @@ class SimplePlayer : public Player{
             Card highestledSuit("TWO", led_suit);
             int highestcardindex = -1;
             for (int i = 0; i < hand.size(); i++) {
-                if (hand[i].get_suit(trump) == led_suit && Card_less(highestledSuit, hand[i], trump, led_card)) {
+                if (hand[i].get_suit(trump) == led_suit && Card_less(highestledSuit, hand[i], led_card, trump)) {
                     highestledSuit = hand[i];
                     highestcardindex = i;
                 }
@@ -227,9 +227,9 @@ class SimplePlayer : public Player{
             Card lowestledSuit(ACE, trump);
             int highestledindex = -1;
             for (int i = 0; i < hand.size(); i++) {
-                if (Card_less(hand[i], highestledSuit, trump)) {
+                if (Card_less(hand[i], lowestledSuit, trump)) {
                     lowestledSuit = hand[i];
-                    highestledindex = i;
+                    lowestledindex = i;
                 }
             }
             hand.erase(hand.begin() + lowestledindex);

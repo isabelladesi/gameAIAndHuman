@@ -117,12 +117,12 @@ class SimplePlayer : public Player{
         } //get suit takes in trump suit as an input
 
         else if(round == 2){
+            valuableCards=0;
             for (int i=0; i < hand.size(); i++){
                 currentCard = hand.at(i);
                 currentCardSuit = currentCard.get_suit();
 
-                if(currentCardSuit == Suit_next(upcardSuit) && 
-                currentCard.is_face_or_ace() == true){
+                if(currentCardSuit == Suit_next(upcardSuit) && currentCard.is_face_or_ace() == true){
                     valuableCards++;
                 }
             }
@@ -131,7 +131,7 @@ class SimplePlayer : public Player{
                 order_up_suit = Suit_next(upcardSuit);
                 return true;
             }
-            else if(is_dealer==true){ //screw the dealer
+            else if(is_dealer==true){ //screw the dealer        SHOULDNT THIS BE FIRST
                 order_up_suit = Suit_next(upcardSuit); //order up any suit
                 return true;
             }

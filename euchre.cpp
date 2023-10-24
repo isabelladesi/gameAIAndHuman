@@ -21,7 +21,8 @@ class Game {
     if (team_tricks_A > team_tricks_B){
     // print0Winners(team_tricks_A, ordered_up, team_points_A);
       team_points_A = team_points_A + 1;
-      cout << players[0]->get_name() << " and " << players[2]->get_name() << " win the hand" << endl;
+      cout << players[0]->get_name() << " and " 
+       << players[2]->get_name() << " win the hand" << endl;
       if (ordered_up % 2 != 0){
         team_points_A = team_points_A + 2;
         cout << "euchred!" << endl;
@@ -34,7 +35,8 @@ class Game {
     else if (team_tricks_B > team_tricks_A){
       // print1Winners(team_tricks_B, ordered_up, team_points_B);
       team_points_B = team_points_B + 1;
-      cout << players[1]->get_name() << " and " << players[3]->get_name() << " win the hand" << endl;
+      cout << players[1]->get_name() << " and " 
+       << players[3]->get_name() << " win the hand" << endl;
       if (ordered_up % 2 != 0){
         team_points_B = team_points_B + 2;
         cout << "euchred!" << endl;
@@ -61,7 +63,7 @@ class Game {
     const string* player4 = &(*players[3]).get_name();
     while (team_points_A < POINTS_TO_WIN && team_points_B < POINTS_TO_WIN){
       cout << "Hand " << hand_round << endl;
-      cout << players[dealerIndex]->get_name() << " deals"<< endl; //(*players[dealerIndex]).get_name()
+      cout << players[dealerIndex]->get_name() << " deals"<< endl; 
       shuffle(SHUFFLE);
       deal(pack, players, dealerIndex);
       // Suit trump;
@@ -72,10 +74,12 @@ class Game {
       make_trump(upcard, dealerIndex, players, ordered_up_suit);
       indexOfPrevWinner = 10;
       for (int i = 0; i < 5; i++){
-        play_trick(dealerIndex, team_tricks_A, team_tricks_B, indexOfPrevWinner);
+        play_trick(dealerIndex, team_tricks_A, team_tricks_B, 
+         indexOfPrevWinner);
       }
       //5 tricks have finished, this round is finished, update team points here
-      print_winners(team_tricks_A, team_tricks_B, team_points_A, team_points_B, ordered_up); 
+      print_winners(team_tricks_A, team_tricks_B, team_points_A, 
+       team_points_B, ordered_up); 
       hand_round = hand_round + 1;
       dealerIndex = dealerIndex + 1;
       if (dealerIndex > 3) {//what does this thing mean --> {
@@ -110,7 +114,7 @@ class Game {
     return;
   }
   //   pack.shuffle();
-  void deal(Pack pack1, vector<Player*> players, int indexOfDealer){ //cant i delete pack1 and just use pack private variable?
+  void deal(Pack pack1, vector<Player*> players, int indexOfDealer){
     int currentPlayer;
     bool hasBeenDealt = false;
     for (int i=0; i<players.size(); i++){ //deal round 1 
@@ -146,28 +150,31 @@ class Game {
     upcard = pack1.deal_one();
 
   }
-  void make_trump(Card &upcard, int dealerIndex, vector<Player*> players, Suit &ordered_up_suit){
+  void make_trump(Card &upcard, int dealerIndex, 
+   vector<Player*> players, Suit &ordered_up_suit){
     //Suit order_up_suit;
     bool is_dealer;
-   // new Player currentPlayer; //= dealerIndex; //is dealer alwyas player 0? does it change with rounds?
     int currentPlayer;
     for(int round = 1; round <3; round++){
-      for(int i=0; i< players.size(); i++){ //changing indexes (1+i)%4
+      for(int i=0; i< players.size(); i++){ 
 
-        currentPlayer =(i+1+dealerIndex)%4; // ELDEST HAND FORMULA (LEFT OF DEALER)
+        currentPlayer =(i+1+dealerIndex)%4; 
         if (players[currentPlayer] == players[dealerIndex]){
           is_dealer = true;
         }
         else{
           is_dealer = false;
         }
-        bool decision = players[currentPlayer]->make_trump(upcard, is_dealer, round, ordered_up_suit);
+        bool decision = players[currentPlayer]->
+         make_trump(upcard, is_dealer, round, ordered_up_suit);
         
         if(decision==false){ //should i access players w a * here too?
-          cout << players[currentPlayer]->get_name() << " passes" << endl; // (*players[i]).get_name() 
+          cout << players[currentPlayer]->get_name() 
+           << " passes" << endl; // (*players[i]).get_name() 
         }
         else if(round==1){
-          cout << players[currentPlayer]->get_name() << " orders up " << ordered_up_suit << endl;
+          cout << players[currentPlayer]->get_name() 
+           << " orders up " << ordered_up_suit << endl;
           // x_playersTurn = currentPlayer;
           trump = ordered_up_suit;
           //PRINT DEALERS HAND
@@ -175,8 +182,9 @@ class Game {
 
           return;
         }
-        else {//if(players[currentPlayer]->make_trump(upcard, is_dealer, round, ordered_up_suit)==true && round==2){
-          cout << players[currentPlayer]->get_name() << " orders up " << ordered_up_suit << endl; //does my make trump account for dealer stuff? add tests abt it?
+        else {
+          cout << players[currentPlayer]->get_name() 
+           << " orders up " << ordered_up_suit << endl; 
           // x_playersTurn = currentPlayer;
           trump = ordered_up_suit;
           cout << "\n";
@@ -185,7 +193,8 @@ class Game {
       }
     }
   }
-    void play_trick(int dealerIndex, int &team_tricks_A, int &team_tricks_B, int winnerLastRound){
+    void play_trick(int dealerIndex, int &team_tricks_A, 
+     int &team_tricks_B, int winnerLastRound){
       //eldest hand index
       //vector<Card> AllCardsPlayed;
 
@@ -194,31 +203,36 @@ class Game {
       int leadPlayerIndex;
       //int indexOfWinningPlayer;//?****
       int currentPlayer;
-      if (winnerLastRound==10){//(team1points ==0 && team2points==0){ //no one won previous round aka first round
-        leadPlayerIndex = (dealerIndex+1)%4; //lead player only next to dealer in first round. future rounds it will be the player that wins the previous trick
-        ledCard = players[leadPlayerIndex]->lead_card(trump); //same thing as playing the card //max card
+      if (winnerLastRound==10){/
+        leadPlayerIndex = (dealerIndex+1)%4; 
+        ledCard = players[leadPlayerIndex]->lead_card(trump); 
       }
       else {
         leadPlayerIndex = winnerLastRound;
         ledCard = players[leadPlayerIndex]->lead_card(trump);
-         //make a function that returns index of player who won last round and put it in the if(card_less_) statement
+         //make a function that returns index of player who 
+         //won last round and put it in the if(card_less_) statement
       }
 
       Card highest = ledCard;
       string playerWithHighestCard;
       //int indexOfWinningPlayer;
 
-      cout << ledCard << " led by " << players[leadPlayerIndex]->get_name() << endl;
+      cout << ledCard << " led by " << 
+       players[leadPlayerIndex]->get_name() << endl;
       for (int i=leadPlayerIndex+1; i<leadPlayerIndex+4; i++){
         currentPlayer = i % 4; //maybe???
-        playedCard = (players[currentPlayer])->play_card(ledCard, trump);//(*players[currentPlayer]).play_card(ledCard,trump);
+        playedCard = (players[currentPlayer])
+         ->play_card(ledCard, trump);
         //AllCardsPlayed.push_back(playedCard);
-        cout << playedCard << " played by " << players[currentPlayer]->get_name()<<endl; //(*players[currentPlayer]).get_name() << endl;
+        cout << playedCard << " played by " 
+         << players[currentPlayer]->get_name()<<endl; 
 
-        //track the max card in this for loop along with the name . led crad < current card ...
+        //track the max card in this for loop along with the name
         if(Card_less(highest, playedCard, ledCard, trump)){
           highest = playedCard;
-          playerWithHighestCard = players[currentPlayer]->get_name();
+          playerWithHighestCard = players[currentPlayer]
+           ->get_name();
           //leadPlayerIndex = currentPlayer;
           //indexOfWinningPlayer = currentPlayer; // >***
           indexOfPrevWinner = currentPlayer;
@@ -236,14 +250,16 @@ class Game {
       //  int cardHighestIndex;
 
       // for (int i = 1; i < 4; i++){
-      //   if(Card_less(highest, AllCardsPlayed[i], ledCard, trump)) {
+      //   if(Card_less(highest, AllCardsPlayed[i], ledCard, 
+      //trump)) {
       //     highest = AllCardsPlayed[i];
       //     cardHighestIndex = i;
       //   }
       // }
       // int trickWinner;
       // trickWinner = (leadPlayerIndex + cardHighestIndex)%4;
-      cout << playerWithHighestCard << " takes the trick" << "\n" << endl;
+      cout << playerWithHighestCard 
+       << " takes the trick" << "\n" << endl;
 
 
     }
@@ -269,11 +285,11 @@ class Game {
   string NAME4 = argv[10];
   string TYPE4 = argv[11];
   //-------------------------------
-  if (!fin.is_open()) { //ADD COUT STATEMENTS TO ALL OF THEM AND SEE WHICH ONES ARENT WORKING!!!!!!
+  if (!fin.is_open()) { 
     cout << "Error opening " << inputFile << endl;;
     return 1;
   }
-  if (!(argc == 12)){ //There are exactly 12 arguments, including the executable name.
+  if (!(argc == 12)){ //There are exactly 12 arguments
     cout << "Usage: euchre.exe PACK_FILENAME [shuffle|noshuffle] "
      << "POINTS_TO_WIN NAME1 TYPE1 NAME2 TYPE2 NAME3 TYPE3 "
      << "NAME4 TYPE4" << endl;
@@ -316,13 +332,6 @@ class Game {
   }
   cout << endl;
 
-  //vector<Player*> players = {&NAME1, &NAME2, &NAME3, &NAME4};
-  // vector<Player*> players;
-  // players.push_back(&NAME1);
-  // players.push_back(&NAME2);
-  // players.push_back(&NAME3);
-  // players.push_back(&NAME4); //NAME's are not players
-
   vector<Player*> players;
   for(int i = 4; i <= 10; i += 2){
     Player * playerTemp = Player_factory(argv[i],argv[i+1]);
@@ -336,11 +345,3 @@ class Game {
     delete players[i];
   }
 } 
-  //this is the right file
-
-//---------------------------------------------
-
-  // argc is argument count. integer representing how many arguments were 
-  //implemente din command line. ./resize.exe arg1 arg2 arg3. argc=4
-  // argv is an array of pointers that point to c style strings. if you wanna 
-  //access that fist argument do:argv[1] returns a c style string

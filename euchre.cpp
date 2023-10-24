@@ -249,8 +249,8 @@ class Game {
       //int indexOfWinningPlayer;
 
       cout << ledCard << " led by " << players[leadPlayerIndex]->get_name() << endl;
-      for (int i=0; i<players.size()-1; i++){
-        currentPlayer = leadPlayerIndex+1+i; //maybe???
+      for (int i=0; i<players.size(); i++){
+        currentPlayer = (leadPlayerIndex+i) % 4; //maybe???
         playedCard = (players[currentPlayer])->play_card(ledCard, trump);//(*players[currentPlayer]).play_card(ledCard,trump);
         //AllCardsPlayed.push_back(playedCard);
         cout << playedCard << " played by " << players[currentPlayer]->get_name()<<endl; //(*players[currentPlayer]).get_name() << endl;

@@ -266,14 +266,14 @@ class Game {
      << "NAME4 TYPE4" << endl;
     return 1;
   }
-  if (!(SHUFFLE == "shuffle") && !(SHUFFLE == "noshuffle")){
+  if (!((SHUFFLE == "shuffle") && (SHUFFLE == "noshuffle"))){
     cout << SHUFFLE <<endl;
     cout << "Usage: euchre.exe PACK_FILENAME [shuffle|noshuffle] "
      << "POINTS_TO_WIN NAME1 TYPE1 NAME2 TYPE2 NAME3 TYPE3 "
      << "NAME4 TYPE4" << endl;
     return 1;
   }
-  if (!(TYPE1 == "Simple") && !(TYPE1 == "Human")){
+  if (!((TYPE1 == "Simple") && (TYPE1 == "Human"))){
     cout << "WRONG4"<<endl;
     cout << "Usage: euchre.exe PACK_FILENAME [shuffle|noshuffle] "
      << "POINTS_TO_WIN NAME1 TYPE1 NAME2 TYPE2 NAME3 TYPE3 "
@@ -281,14 +281,14 @@ class Game {
      
     return 1;
   }
-  if (!(TYPE2 == "Simple") && !(TYPE2 == "Human")){
+  if (!((TYPE2 == "Simple") && (TYPE2 == "Human"))){
     cout << "WRONG5"<<endl;
     cout << "Usage: euchre.exe PACK_FILENAME [shuffle|noshuffle] "
      << "POINTS_TO_WIN NAME1 TYPE1 NAME2 TYPE2 NAME3 TYPE3 "
      << "NAME4 TYPE4" << endl;
     return 1;
   }
-  if (!(TYPE3 == "Simple") && !(TYPE3 == "Human")){
+  if (!((TYPE3 == "Simple") && (TYPE3 == "Human"))){
     cout << "WRONG6"<<endl;
     cout << "Usage: euchre.exe PACK_FILENAME [shuffle|noshuffle] "
      << "POINTS_TO_WIN NAME1 TYPE1 NAME2 TYPE2 NAME3 TYPE3 "

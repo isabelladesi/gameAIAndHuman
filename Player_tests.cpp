@@ -229,6 +229,7 @@ TEST(test_simple_player_add_discard_all_trump) {
     delete bob;
 }
 
+
 // TEST(test_simple_player_add_discard_all_trump) { //CHANGE THIS
 //     // create hand for alice
 //     Player * bob = Player_factory("Bob", "Simple");

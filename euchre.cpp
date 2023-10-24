@@ -65,7 +65,7 @@ class Game {
       cout << players[dealerIndex]->get_name() << " deals"<< endl; //(*players[dealerIndex]).get_name()
       shuffle(SHUFFLE);
       deal(pack, players, dealerIndex);
-      Suit trump;
+      // Suit trump;
       // Card upcard = pack.deal_one();
       cout << upcard << " turned up" << endl;
       trump = upcard.get_suit();
@@ -73,7 +73,7 @@ class Game {
       make_trump(upcard, dealerIndex, players, ordered_up_suit);
       indexOfPrevWinner = 10;
       for (int i = 0; i < 5; i++){
-        play_trick(dealerIndex, trump, team_points_A, team_points_B, indexOfPrevWinner);
+        play_trick(dealerIndex, team_points_A, team_points_B, indexOfPrevWinner);
         if (leadIndex % 2 == 0) {
           team_tricks_A = team_tricks_A + 1;
         }
@@ -227,7 +227,7 @@ class Game {
       }
     }
   }
-    void play_trick(int dealerIndex, Suit trump, int team1points, int team2points, int winnerLastRound){
+    void play_trick(int dealerIndex, int team1points, int team2points, int winnerLastRound){
       //eldest hand index
       //vector<Card> AllCardsPlayed;
 

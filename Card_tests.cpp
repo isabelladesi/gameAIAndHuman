@@ -20,8 +20,10 @@ TEST(test_card_get_rank) {
 TEST(test_card_get_suit) {
     Suit trump = Suit::SPADES;
     Card c(JACK, SPADES);
+    Card b(JACK, CLUBS);
     ASSERT_EQUAL(SPADES, c.get_suit());
     ASSERT_EQUAL(trump, c.get_suit(trump));
+    ASSERT_EQUAL(trump, b.get_suit(trump));
 }
 
 TEST(test_card_face_or_ace) {

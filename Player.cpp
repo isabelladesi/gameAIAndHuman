@@ -209,7 +209,7 @@ class SimplePlayer : public Player{
 
     Card play_card(const Card &led_card, Suit trump) override{
         assert(hand.size() >=1);
-        Card led_suit = led_card.get_suit(trump);
+        Suit led_suit = led_card.get_suit(trump);
         bool hasledSuit = false;
 
         // find if they can follow suit
@@ -220,7 +220,7 @@ class SimplePlayer : public Player{
         }
         // If a Simple Player can follow suit, they play the highest card that follows suit
         if (hasledSuit) {
-            Card highestledSuit("TWO", led_suit);
+            Card highestledSuit(TWO, led_suit);
             int highestcardindex = -1;
             for (int i = 0; i < hand.size(); i++) {
                 if (hand[i].get_suit(trump) == led_suit && Card_less(highestledSuit, hand[i], led_card, trump)) {

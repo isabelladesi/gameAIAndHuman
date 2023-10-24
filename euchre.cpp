@@ -17,9 +17,9 @@ class Game {
   }
 
   void print_winners(int team_tricks_A, int team_tricks_B, 
-   int &team_points_A, int &team_points_B, int ordered_up){
+   int &team_points_A, int &team_points_B){
     if (team_tricks_A > team_tricks_B){
-    // print0Winners(team_tricks_A, ordered_up, team_points_A);
+    // print0Winners(team_tricks_A, team_points_A);
       team_points_A = team_points_A + 1;
       cout << players[0]->get_name() << " and " 
        << players[2]->get_name() << " win the hand" << endl;
@@ -54,7 +54,6 @@ class Game {
     int team_points_B = 0;
     int hand_round = 0;
     int dealerIndex = 0;
-    int ordered_up = 0;
     int team_tricks_A = 0;
     int team_tricks_B = 0;
     const string* player1 = &(*players[0]).get_name();
@@ -79,7 +78,7 @@ class Game {
       }
       //5 tricks have finished, this round is finished, update team points here
       print_winners(team_tricks_A, team_tricks_B, team_points_A, 
-       team_points_B, ordered_up); 
+       team_points_B); 
       hand_round = hand_round + 1;
       dealerIndex = dealerIndex + 1;
       if (dealerIndex > 3) {//what does this thing mean --> {

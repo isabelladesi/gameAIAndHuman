@@ -14,7 +14,7 @@ class Game {
     pack = packPlay;
     POINTS_TO_WIN = points_to_win;
     SHUFFLE = shuffle;
-  }
+  } // test
 
   //this is mainly copied so change this a lot
   void play(int POINTS_TO_WIN, vector<Player*> players, string SHUFFLE){

@@ -46,6 +46,16 @@ class Game {
     }
   }
 
+  void printGameResults(int &team_points_A, int &team_points_B){
+    if (team_points_A > team_points_B){
+      cout << (*players[0]).get_name() << " and " 
+        << (*players[2]).get_name() << " win!" << endl;
+    } else {
+      cout << (*players[1]).get_name() << " and " 
+        << (*players[3]).get_name() << " win!" << endl;
+    }
+  }
+
   //this is mainly copied so change this a lot
   void play(int POINTS_TO_WIN, vector<Player*> players, string SHUFFLE){
     int team_points_A = 0; 
@@ -72,13 +82,13 @@ class Game {
       make_trump(upcard, dealerIndex, players, ordered_up_suit);
       indexOfPrevWinner = 10;
       for (int i = 0; i < 5; i++){
-        play_trick(dealerIndex, team_tricks_A, team_tricks_B, indexOfPrevWinner);
+        play_trick(dealerIndex, team_tricks_A, team_tricks_B);//, indexOfPrevWinner);
       }
       //5 tricks have finished, this round is finished, update team points here
       print_winners(team_tricks_A, team_tricks_B, team_points_A, team_points_B, ordered_up); 
       hand_round = hand_round + 1;
       dealerIndex = dealerIndex + 1;
-      if (dealerIndex > 3) {//what does this thing mean --> {
+      if (dealerIndex > 3) {// THIS ISNT GETTING PRINTED OUT
         dealerIndex = dealerIndex - 4;
         // printScore(team_points_A,team_points_B);
         cout << player1 << " and " << player3   
@@ -86,7 +96,7 @@ class Game {
         cout << player2 << " and "<< player4 
         << " have " << team_points_B << " points" << endl;
       }    
-      // printGameResults(team_points_A, team_points_B);
+      printGameResults(team_points_A, team_points_B);
     }
   }
 
@@ -185,7 +195,7 @@ class Game {
       }
     }
   }
-    void play_trick(int dealerIndex, int &team_tricks_A, int &team_tricks_B, int winnerLastRound){
+    void play_trick(int dealerIndex, int &team_tricks_A, int &team_tricks_B){//, int winnerLastRound){
       //eldest hand index
       //vector<Card> AllCardsPlayed;
 
@@ -194,12 +204,12 @@ class Game {
       int leadPlayerIndex;
       //int indexOfWinningPlayer;//?****
       int currentPlayer;
-      if (winnerLastRound==10){//(team1points ==0 && team2points==0){ //no one won previous round aka first round
+      if (indexOfPrevWinner==10){//(team1points ==0 && team2points==0){ //no one won previous round aka first round
         leadPlayerIndex = (dealerIndex+1)%4; //lead player only next to dealer in first round. future rounds it will be the player that wins the previous trick
         ledCard = players[leadPlayerIndex]->lead_card(trump); //same thing as playing the card //max card
       }
       else {
-        leadPlayerIndex = winnerLastRound; //make a function that returns index of player who won last round and put it in the if(card_less_) statement
+        leadPlayerIndex = indexOfPrevWinner; //make a function that returns index of player who won last round and put it in the if(card_less_) statement
       }
 
       Card highest = ledCard;

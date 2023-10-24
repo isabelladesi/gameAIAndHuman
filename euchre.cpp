@@ -242,6 +242,7 @@ class Game {
       else if (team_tricks_A == 5){
         team_points_A = team_points_A + 2;
         cout << "march!" << endl;
+      }
     }
     else if (team_tricks_B > team_tricks_A){
       // print1Winners(team_tricks_B, ordered_up, team_points_B);
@@ -257,12 +258,15 @@ class Game {
         cout << "march!" << endl;
       }
     }
-  }
+   
+  
   cout << players[0]->get_name() << " and " 
   << players[2]->get_name() << " have " << team_points_A << " points" << endl;
   cout << players[1]->get_name() << " and " 
   << players[3]->get_name() << " have " << team_points_B << " points" << endl;
+   }
   };
+
 
   int main(int argc, char **argv) {
   //open file streams

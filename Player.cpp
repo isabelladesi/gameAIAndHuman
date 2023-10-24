@@ -7,37 +7,6 @@
 
 using namespace std;
 
-<<<<<<< HEAD
-vector<Card> sortReal(vector<Card> hand, Suit trump){
-    sort(hand.begin(), hand.end());
-    int indexLB=-1;
-    int indexRB=-1;
-    for(int i=0; i<hand.size(); i++){
-        if(hand[i].is_left_bower(trump)){
-            indexLB =i;
-            // hand.push_back(hand[i]);
-            // hand.erase(hand.begin() + i);
-        }
-        if (hand[i].is_right_bower(trump)){
-            indexRB=i;
-            // hand.push_back(hand[i]);
-            // hand.erase(hand.begin() + i);
-        }
-    }
-    if(indexLB!=-1){ //there is a LB
-        hand.push_back(hand[indexLB]);
-        hand.erase(hand.begin() + indexLB);
-    }
-
-    if(indexRB != -1){ //there is a RB
-        hand.push_back(hand[indexRB]);
-        hand.erase(hand.begin() + indexRB);
-    }
-
-    return hand;
-
-}
-=======
 // Player * Player_factory(const string &name, const string &strategy) {
 //   assert(false);
 // }
@@ -66,7 +35,6 @@ vector<Card> sortReal(vector<Card> hand, Suit trump){
 
 // }
 
->>>>>>> 0fc605d841d8083f8f72149a756bc918c1f6131f
 
 class SimplePlayer : public Player{
     public:

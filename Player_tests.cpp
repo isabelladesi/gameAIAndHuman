@@ -219,48 +219,71 @@ TEST(test_simple_player_add_discard_all_trump) {
     Card aceSpades = Card(ACE, SPADES);
     Card kingSpades = Card(KING, SPADES);
     Card queenSpades = Card(QUEEN, SPADES);
-    Card twoSpades = Card(TWO, SPADES);
+    Card tenSpades = Card(TEN, SPADES);
     ASSERT_EQUAL(jackSpades ,bob->play_card(led, SPADES));
     ASSERT_EQUAL(aceSpades ,bob->play_card(led, SPADES));
     ASSERT_EQUAL(kingSpades ,bob->play_card(led, SPADES));
     ASSERT_EQUAL(queenSpades ,bob->play_card(led, SPADES));
-    ASSERT_EQUAL(twoSpades ,bob->play_card(led, SPADES));
+    ASSERT_EQUAL(tenSpades ,bob->play_card(led, SPADES));
 
     delete bob;
 }
+TEST(test_simple_follow_suit) {
+    // create hand for alice
+    Player * jack = Player_factory("Jack", "Simple");
+    jack->add_card(Card(TEN, SPADES));
+    jack->add_card(Card(JACK, SPADES));
+    jack->add_card(Card(QUEEN, DIAMONDS));
+    jack->add_card(Card(KING, DIAMONDS));
+    jack->add_card(Card(ACE, SPADES));
 
+    // jack plays a card
+    Card nine_diamonds(NINE, DIAMONDS); // led card
+    // arguments - led card and trump suit
+    Card card_played = jack->play_card(nine_diamonds, HEARTS); 
 
-// TEST(test_simple_player_add_discard_all_trump) { //CHANGE THIS
-//     // create hand for alice
-//     Player * bob = Player_factory("Bob", "Simple");
-//     bob->add_card(Card(TEN, SPADES));
-//     bob->add_card(Card(JACK, SPADES));
-//     bob->add_card(Card(QUEEN, SPADES));
-//     bob->add_card(Card(KING, SPADES));
-//     bob->add_card(Card(ACE, SPADES));
+   // verify card played
+   ASSERT_EQUAL(card_played, Card(KING, DIAMONDS));
 
-//     // add upcard to deck - will remove two spades
-//     bob->add_and_discard(Card(TWO, SPADES));
+    delete jack;
+}
 
-//     // verify alice hand
-//     Card led = Card(THREE, SPADES);
+// play card test - cant follow suit
+TEST(test_simple_cant_follow_suit) {
+    // create hand for alice
+    Player * mike = Player_factory("Mike", "Simple");
+    mike->add_card(Card(TWO, SPADES));
+    mike->add_card(Card(JACK, SPADES));
+    mike->add_card(Card(QUEEN, SPADES));
+    mike->add_card(Card(KING, SPADES));
+    mike->add_card(Card(ACE, HEARTS));
 
-//     Card jackSpades = Card(JACK, SPADES);
-//     Card aceSpades = Card(ACE, SPADES);
-//     Card kingSpades = Card(KING, SPADES);
-//     Card queenSpades = Card(QUEEN, SPADES);
-//     Card twoSpades = Card(TWO, SPADES);
-//     ASSERT_EQUAL(jackSpades ,bob->play_card(led, SPADES));
+    // alice plays a card
+    Card nine_diamonds(NINE, DIAMONDS); // led card
+    // arguments - led card and trump suit
+    Card card_played = mike->play_card(nine_diamonds, HEARTS); 
 
-//     ASSERT_EQUAL(aceSpades ,bob->play_card(led, SPADES));
+   // verify card played
+   ASSERT_EQUAL(card_played, Card(TWO, SPADES));
 
-//     ASSERT_EQUAL(kingSpades ,bob->play_card(led, SPADES));
-    
-//     ASSERT_EQUAL(queenSpades ,bob->play_card(led, SPADES));
+    delete mike;
+}
+TEST(test_simple_cant_follow_suit_ranks) {
+    // create hand for john
+    Player * john = Player_factory("John", "Simple");
+    john->add_card(Card(QUEEN, SPADES));
+    john->add_card(Card(KING, CLUBS));
+    john->add_card(Card(KING, HEARTS));
 
-//     ASSERT_EQUAL(twoSpades ,bob->play_card(led, SPADES));
+    // john plays a card
+    Card nine_diamonds(NINE, DIAMONDS); // led card
+    // arguments - led card and trump suit
+    Card card_played = john->play_card(nine_diamonds, HEARTS); 
 
-//     delete bob;
-// }
+   // verify card played
+   ASSERT_EQUAL(card_played, Card(QUEEN, SPADES));
+
+    delete john;
+}
 
 TEST_MAIN()

@@ -186,4 +186,54 @@ TEST(test_player_make_trump_dealer_round2) {
   delete bob;
 }
 
+TEST(test_simple_player_not_make_trump) {
+    Player * bob = Player_factory("Bob", "Simple");
+    bob->add_card(Card(NINE, DIAMONDS));
+    bob->add_card(Card(TEN, SPADES));
+    bob->add_card(Card(QUEEN, SPADES));
+    bob->add_card(Card(KING, SPADES));
+    bob->add_card(Card(ACE, SPADES));
+
+    Card nine_diamonds(NINE, DIAMONDS); //upcard
+    bool is_dealer = true;
+    Suit DIAMONDS;
+    bool did_bob_not_order_up = bob->make_trump(nine_diamonds, is_dealer, 1, DIAMONDS);
+    ASSERT_FALSE(did_bob_not_order_up);
+
+    delete bob;
+}
+
+TEST(test_simple_player_add_discard_all_trump) {
+    // create hand for alice
+    Player * alice = Player_factory("Alice", "Simple");
+    alice->add_card(Card(TEN, SPADES));
+    alice->add_card(Card(JACK, SPADES));
+    alice->add_card(Card(QUEEN, SPADES));
+    alice->add_card(Card(KING, SPADES));
+    alice->add_card(Card(ACE, SPADES));
+
+    // add upcard to deck - will remove two spades
+    alice->add_and_discard(Card(TWO, SPADES));
+
+    // verify alice hand
+    Card led = Card(THREE, SPADES);
+
+    Card aceSpades = Card(ACE, SPADES);
+    ASSERT_EQUAL(aceSpades ,alice->play_card(led, SPADES));
+
+    Card kingSpades = Card(KING, SPADES);
+    ASSERT_EQUAL(kingSpades ,alice->play_card(led, SPADES));
+
+    Card queenSpades = Card(QUEEN, SPADES);
+    ASSERT_EQUAL(queenSpades ,alice->play_card(led, SPADES));
+
+    Card jackSpades = Card(JACK, SPADES);
+    ASSERT_EQUAL(jackSpades ,alice->play_card(led, SPADES));
+
+    Card twoSpades = Card(TWO, SPADES);
+    ASSERT_EQUAL(twoSpades ,alice->play_card(led, SPADES));
+
+    delete alice;
+}
+
 TEST_MAIN()

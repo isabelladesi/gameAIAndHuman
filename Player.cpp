@@ -261,7 +261,7 @@ class SimplePlayer : public Player{
 
         }
         playCard = hand.at(0);
-        hand.erase(hand.begin() + hand.size()-1);
+        hand.erase(hand.begin());
         
         return playCard;
 

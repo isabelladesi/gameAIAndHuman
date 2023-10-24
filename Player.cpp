@@ -223,7 +223,7 @@ class SimplePlayer : public Player{
 
     Card play_card(const Card &led_card, Suit trump) override{
         assert(hand.size() >=1);
-        hand = sortReal(hand,trump);
+       // hand = sortReal(hand,trump);
         Card playCard;
         Suit leadCardSuit = led_card.get_suit(trump);
         // Card RBower(JACK, leadCardSuit);

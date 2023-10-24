@@ -153,37 +153,72 @@ class SimplePlayer : public Player{
 
     Card lead_card(Suit trump) override{
         assert(hand.size() >=1);
-        Card leadCard;
+        // Card leadCard;
 
-        Card currentCard;
-        Suit currentCardSuit;
+        // Card currentCard;
+        // Suit currentCardSuit;
     
-        int indexLeadCard;
-  
+        // int indexLeadCard;
+        bool hasnontrump = false;
 
-        //traversing the hand
-        for (int i=hand.size()-1; i>-1; i--){
-                currentCard = hand.at(i);
-                currentCardSuit = currentCard.get_suit();
-
-                if(currentCardSuit != trump){
-                    indexLeadCard = i;
-                    leadCard = currentCard;
-
-                    hand.erase(hand.begin() + indexLeadCard);
-                    return leadCard;
-      
-                }
-     
+        // find if it has non trump suit
+        for (int i = 0; i < hand.size(); i++){
+            if (hand[i].get_suit(trump) != trump){
+                hasnontrump = true;
             }
+        }
+
+        // if has non trump suit, play highest card in hand
+        if (hasnontrump) {
+            Card highestnontrump(TWO, Suit_next(trump));
+            int highestcardindex = -1;
+            for (int i = 0; i < hand.size(); i++) {
+                if (hand[i].get_suit(trump) != trump && Card_less(highestnontrump, hand[i], trump)) {
+                    highestnontrump = hand[i];
+                    highestcardindex = i;
+                }
+            }
+            hand.erase(hand.begin() + highestcardindex);
+            return highestnontrump;
+        }
+
+        // if there are only trump, play highest trump card
+        else {
+            Card highesttrump(TWO, trump);
+            int highesttrumpindex = -1;
+            for (int i = 0; i < hand.size(); i++) {
+                if (Card_less(highesttrump, hand[i], trump)) {
+                    highesttrump = hand[i];
+                    highesttrumpindex = i;
+                }
+            }
+            hand.erase(hand.begin() + highesttrumpindex);
+            return highesttrump;
+        }
+
+        // //traversing the hand
+        // for (int i=hand.size()-1; i>-1; i--){
+        //         currentCard = hand.at(i);
+        //         currentCardSuit = currentCard.get_suit();
+
+        //         if(currentCardSuit != trump){
+        //             indexLeadCard = i;
+        //             leadCard = currentCard;
+
+        //             hand.erase(hand.begin() + indexLeadCard);
+        //             return leadCard;
+      
+        //         }
+     
+        //     }
 
 
-            leadCard = hand.at(hand.size()-1);
-            hand.erase(hand.begin() + hand.size()-1);
-            return leadCard;
+        //     leadCard = hand.at(hand.size()-1);
+        //     hand.erase(hand.begin() + hand.size()-1);
+        //     return leadCard;
             
-            //test: highest rank being at edges. diff orders of trump 
-            //and nontrump cards
+        //     //test: highest rank being at edges. diff orders of trump 
+        //     //and nontrump cards
     }
 
     Card play_card(const Card &led_card, Suit trump) override{

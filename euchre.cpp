@@ -199,9 +199,7 @@ class Game {
         ledCard = players[leadPlayerIndex]->lead_card(trump); //same thing as playing the card //max card
       }
       else {
-        leadPlayerIndex = winnerLastRound;
-        ledCard = players[leadPlayerIndex]->lead_card(trump);
-         //make a function that returns index of player who won last round and put it in the if(card_less_) statement
+        leadPlayerIndex = winnerLastRound; //make a function that returns index of player who won last round and put it in the if(card_less_) statement
       }
 
       Card highest = ledCard;

@@ -17,17 +17,17 @@ class Game {
   }
 
   void print_winners(int team_tricks_A, int team_tricks_B, 
-   int team_points_A, int team_points_B, int ordered_up){
+   int &team_points_A, int &team_points_B, int ordered_up){
     if (team_tricks_A > team_tricks_B){
     // print0Winners(team_tricks_A, ordered_up, team_points_A);
       team_points_A = team_points_A + 1;
       cout << players[0]->get_name() << " and " << players[2]->get_name() << " win the hand" << endl;
       if (ordered_up % 2 != 0){
-        team_points_A = team_points_A + 1;
+        team_points_A = team_points_A + 2;
         cout << "euchred!" << endl;
       } 
       else if (team_tricks_A == 5){
-        team_points_A = team_points_A + 1;
+        team_points_A = team_points_A + 2;
         cout << "march!" << endl;
       }
     }
@@ -36,11 +36,11 @@ class Game {
       team_points_B = team_points_B + 1;
       cout << players[1]->get_name() << " and " << players[3]->get_name() << " win the hand" << endl;
       if (ordered_up % 2 != 0){
-        team_points_B = team_points_B + 1;
+        team_points_B = team_points_B + 2;
         cout << "euchred!" << endl;
       } 
       else if (team_tricks_B == 5){
-        team_points_B = team_points_B + 1;
+        team_points_B = team_points_B + 2;
         cout << "march!" << endl;
       }
     }
@@ -52,7 +52,6 @@ class Game {
     int team_points_B = 0;
     int hand_round = 0;
     int dealerIndex = 0;
-    int leadIndex = dealerIndex + 1;
     int ordered_up = 0;
     int team_tricks_A = 0;
     int team_tricks_B = 0;
@@ -73,14 +72,9 @@ class Game {
       make_trump(upcard, dealerIndex, players, ordered_up_suit);
       indexOfPrevWinner = 10;
       for (int i = 0; i < 5; i++){
-        play_trick(dealerIndex, team_points_A, team_points_B, indexOfPrevWinner);
-        if (leadIndex % 2 == 0) {
-          team_tricks_A = team_tricks_A + 1;
-        }
-        else {
-          team_tricks_B = team_tricks_B + 1;
-        }
+        play_trick(dealerIndex, team_tricks_A, team_tricks_B, indexOfPrevWinner);
       }
+      //5 tricks have finished, this round is finished, update team points here
       print_winners(team_tricks_A, team_tricks_B, team_points_A, team_points_B, ordered_up); 
       hand_round = hand_round + 1;
       dealerIndex = dealerIndex + 1;
@@ -93,44 +87,8 @@ class Game {
         << " have " << team_points_B << " points" << endl;
       }    
       // printGameResults(team_points_A, team_points_B);
-      if (team_points_A > team_points_B){
-        cout << player1 << " and " << player3 << " win the hand" << endl;
-      } 
-      else {
-        cout << player2 << " and " << player4 << " win the hand" << endl;
-      }
     }
   }
-
-  // void print_winners(int team_tricks_A, int team_tricks_B, 
-  //  int team_points_A, int team_points_B, int ordered_up){
-  //   if (team_tricks_A > team_tricks_B){
-  //   // print0Winners(team_tricks_A, ordered_up, team_points_A);
-  //     team_points_A = team_points_A + 1;
-  //     cout << players[0]->get_name() << " and " << players[2]->get_name() << " win the hand" << endl;
-  //     if (ordered_up % 2 != 0){
-  //       team_points_A = team_points_A + 1;
-  //       cout << "euchred!" << endl;
-  //     } 
-  //     else if (team_tricks_A == 5){
-  //       team_points_A = team_points_A + 1;
-  //       cout << "march!" << endl;
-  //     }
-  //   }
-  //   else if (team_tricks_B > team_tricks_A){
-  //     // print1Winners(team_tricks_B, ordered_up, team_points_B);
-  //     team_points_B = team_points_B + 1;
-  //     cout << players[1]->get_name() << " and " << players[3]->get_name() << " win the hand" << endl;
-  //     if (ordered_up % 2 != 0){
-  //       team_points_B = team_points_B + 1;
-  //       cout << "euchred!" << endl;
-  //     } 
-  //     else if (team_tricks_B == 5){
-  //       team_points_B = team_points_B + 1;
-  //       cout << "march!" << endl;
-  //     }
-  //   }
-  // }
 
 
  private:
@@ -227,7 +185,7 @@ class Game {
       }
     }
   }
-    void play_trick(int dealerIndex, int team1points, int team2points, int winnerLastRound){
+    void play_trick(int dealerIndex, int &team_tricks_A, int &team_tricks_B, int winnerLastRound){
       //eldest hand index
       //vector<Card> AllCardsPlayed;
 
@@ -249,8 +207,8 @@ class Game {
       //int indexOfWinningPlayer;
 
       cout << ledCard << " led by " << players[leadPlayerIndex]->get_name() << endl;
-      for (int i=0; i<players.size(); i++){
-        currentPlayer = (leadPlayerIndex+i) % 4; //maybe???
+      for (int i=leadPlayerIndex+1; i<leadPlayerIndex+4; i++){
+        currentPlayer = i % 4; //maybe???
         playedCard = (players[currentPlayer])->play_card(ledCard, trump);//(*players[currentPlayer]).play_card(ledCard,trump);
         //AllCardsPlayed.push_back(playedCard);
         cout << playedCard << " played by " << players[currentPlayer]->get_name()<<endl; //(*players[currentPlayer]).get_name() << endl;
@@ -264,6 +222,13 @@ class Game {
           indexOfPrevWinner = currentPlayer;
 
         }
+      }
+      //update team A or team B tricks here
+      if (leadPlayerIndex % 2 == 0) {
+        team_tricks_A = team_tricks_A + 1;
+      }
+      else {
+        team_tricks_B = team_tricks_B + 1;
       }
       //  Card highest = AllCardsPlayed[0];
       //  int cardHighestIndex;

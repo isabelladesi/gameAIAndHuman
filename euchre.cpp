@@ -210,6 +210,7 @@ class Game {
       }
       else {
         leadPlayerIndex = indexOfPrevWinner; //make a function that returns index of player who won last round and put it in the if(card_less_) statement
+        ledCard = players[leadPlayerIndex]->lead_card(trump);
       }
 
       Card highest = ledCard;

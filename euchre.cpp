@@ -71,6 +71,8 @@ class Game {
   Card upcard;
   Suit trump;
   int whoOrderUp;
+  int currentPlayer1;
+
 
   void shuffle(string SHUFFLE) {
     if (SHUFFLE == "shuffle") {
@@ -182,7 +184,7 @@ class Game {
       Card playedCard;
       int leadPlayerIndex;
       //int indexOfWinningPlayer;//?****
-      int currentPlayer;
+      //int currentPlayer1;
       if (winnerLastRound==10){
         leadPlayerIndex = (dealerIndex+1)%4; 
         ledCard = players[leadPlayerIndex]->lead_card(trump); 
@@ -200,19 +202,23 @@ class Game {
       cout << ledCard << " led by " << 
        players[leadPlayerIndex]->get_name() << endl;
       for (int i=leadPlayerIndex+1; i<leadPlayerIndex+4; i++){
-        currentPlayer = i % 4; //maybe???
-        playedCard = (players[currentPlayer])
+        currentPlayer1 = i % 4; //maybe???
+        playedCard = (players[currentPlayer1])
          ->play_card(ledCard, trump);
         cout << playedCard << " played by " 
-         << players[currentPlayer]->get_name()<<endl; 
+         << players[currentPlayer1]->get_name()<<endl; 
 
         //track the max card in this for loop along with the name
         if(Card_less(highest, playedCard, ledCard, trump)){
           highest = playedCard;
-          playerWithHighestCard = players[currentPlayer]
+          playerWithHighestCard = players[currentPlayer1]
            ->get_name();
-          indexOfPrevWinner = currentPlayer;
+          indexOfPrevWinner = currentPlayer1;
 
+        }
+        else{
+          playerWithHighestCard=players[indexOfPrevWinner]
+           ->get_name();
         }
       }
       //update team A or team B tricks here

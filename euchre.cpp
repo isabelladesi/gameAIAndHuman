@@ -40,7 +40,8 @@ class Game {
       cout << upcard << " turned up" << endl;
       trump = upcard.get_suit();
       int x_playersTurn=0;
-      make_trump(upcard, dealerIndex, players, x_playersTurn);
+      Suit ordered_up_suit;
+      make_trump(upcard, dealerIndex, players, x_playersTurn, ordered_up_suit);
       // playHand(team_tricks_A, team_tricks_B, dealerIndex, trump);
       // if (leadIndex > 3){
       //   leadIndex = leadIndex - 4;
@@ -155,8 +156,8 @@ class Game {
     upcard = pack1.deal_one();
 
   }
-  void make_trump(Card &upcard, int dealerIndex, vector<Player*> players, int x_playersTurn){
-    Suit order_up_suit;
+  void make_trump(Card &upcard, int dealerIndex, vector<Player*> players, int x_playersTurn, Suit &ordered_up_suit){
+    //Suit order_up_suit;
     bool is_dealer;
    // new Player currentPlayer; //= dealerIndex; //is dealer alwyas player 0? does it change with rounds?
     int currentPlayer;
@@ -171,11 +172,11 @@ class Game {
           is_dealer = false;
         }
 
-        if(players[currentPlayer]->make_trump(upcard, is_dealer, round, order_up_suit)==false){ //should i access players w a * here too?
+        if(players[currentPlayer]->make_trump(upcard, is_dealer, round, ordered_up_suit)==false){ //should i access players w a * here too?
           cout << players[currentPlayer]->get_name() << " passes" << endl; // (*players[i]).get_name() 
         }
-        else if(players[currentPlayer]->make_trump(upcard, is_dealer, round, order_up_suit)==true && round==1){
-          cout << players[currentPlayer]->get_name() << " orders up " << order_up_suit << endl;
+        else if(players[currentPlayer]->make_trump(upcard, is_dealer, round, ordered_up_suit)==true && round==1){
+          cout << players[currentPlayer]->get_name() << " orders up " << ordered_up_suit << endl;
           x_playersTurn = currentPlayer;
           
           //PRINT DEALERS HAND
@@ -183,11 +184,11 @@ class Game {
 
           return;
         }
-        else if(players[currentPlayer]->make_trump(upcard, is_dealer, round, order_up_suit)==true && round==2){
-          cout << (*players[currentPlayer]).get_name() << " orders up " << order_up_suit << endl; //does my make trump account for dealer stuff? add tests abt it?
+        else if(players[currentPlayer]->make_trump(upcard, is_dealer, round, ordered_up_suit)==true && round==2){
+          cout << players[currentPlayer]->get_name() << " orders up " << ordered_up_suit << endl; //does my make trump account for dealer stuff? add tests abt it?
           x_playersTurn = currentPlayer;
           cout << "\n";
-          gitreturn;
+          return;
         }
       }
     }

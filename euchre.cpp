@@ -143,7 +143,12 @@ class Game {
         else if(round==1){
           cout << players[currentPlayer]->get_name() 
            << " orders up " << ordered_up_suit << endl;
-           whoOrderUp = 1;
+           if (currentPlayer == 0 || currentPlayer == 2){
+             whoOrderUp = 1;
+           }
+           else if (currentPlayer == 1 || currentPlayer == 3){
+             whoOrderUp = 2;
+           }
           // x_playersTurn = currentPlayer;
           trump = ordered_up_suit;
           //PRINT DEALERS HAND
@@ -154,7 +159,12 @@ class Game {
         else {
           cout << players[currentPlayer]->get_name() 
            << " orders up " << ordered_up_suit << endl; 
-           whoOrderUp = 2;
+           if (currentPlayer == 0 || currentPlayer == 2){
+             whoOrderUp = 1;
+           }
+           else if (currentPlayer == 1 || currentPlayer == 3){
+             whoOrderUp = 2;
+           }
           // x_playersTurn = currentPlayer;
           trump = ordered_up_suit;
           cout << "\n";
@@ -225,21 +235,20 @@ class Game {
       team_points_A = team_points_A + 1;
       cout << players[0]->get_name() << " and " 
        << players[2]->get_name() << " win the hand" << endl;
-      if (whoOrderUp == 1){
+      if (!(whoOrderUp == 1)){
         team_points_A = team_points_A + 2;
         cout << "euchred!" << endl;
       } 
       else if (team_tricks_A == 5){
         team_points_A = team_points_A + 2;
         cout << "march!" << endl;
-      }
     }
     else if (team_tricks_B > team_tricks_A){
       // print1Winners(team_tricks_B, ordered_up, team_points_B);
       team_points_B = team_points_B + 1;
       cout << players[1]->get_name() << " and " 
        << players[3]->get_name() << " win the hand" << endl;
-      if (whoOrderUp == 1){
+      if (!(whoOrderUp == 2)){
         team_points_B = team_points_B + 2;
         cout << "euchred!" << endl;
       } 
@@ -249,6 +258,10 @@ class Game {
       }
     }
   }
+  cout << players[0]->get_name() << " and " 
+  << players[2]->get_name() << " have " << team_points_A << " points" << endl;
+  cout << players[1]->get_name() << " and " 
+  << players[3]->get_name() << " have " << team_points_B << " points" << endl;
   };
 
   int main(int argc, char **argv) {
@@ -330,4 +343,4 @@ class Game {
   for (size_t i = 0; i < players.size(); ++i) {
     delete players[i];
   }
-} 
+}

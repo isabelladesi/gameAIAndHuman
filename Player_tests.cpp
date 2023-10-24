@@ -204,7 +204,6 @@ TEST(test_simple_player_not_make_trump) {
 }
 
 TEST(test_simple_player_add_discard_all_trump) {
-    // create hand for alice
     Player * bob = Player_factory("Bob", "Simple");
     bob->add_card(Card(TEN, SPADES));
     bob->add_card(Card(JACK, SPADES));
@@ -212,10 +211,8 @@ TEST(test_simple_player_add_discard_all_trump) {
     bob->add_card(Card(KING, SPADES));
     bob->add_card(Card(ACE, SPADES));
 
-    // add upcard to deck - will remove two spades
     bob->add_and_discard(Card(TWO, SPADES));
 
-    // verify alice hand
     Card led = Card(EIGHT, SPADES);
 
     Card jackSpades = Card(JACK, SPADES);
@@ -224,13 +221,9 @@ TEST(test_simple_player_add_discard_all_trump) {
     Card queenSpades = Card(QUEEN, SPADES);
     Card twoSpades = Card(TWO, SPADES);
     ASSERT_EQUAL(jackSpades ,bob->play_card(led, SPADES));
-
     ASSERT_EQUAL(aceSpades ,bob->play_card(led, SPADES));
-
     ASSERT_EQUAL(kingSpades ,bob->play_card(led, SPADES));
-    
     ASSERT_EQUAL(queenSpades ,bob->play_card(led, SPADES));
-
     ASSERT_EQUAL(twoSpades ,bob->play_card(led, SPADES));
 
     delete bob;

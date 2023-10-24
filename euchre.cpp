@@ -39,13 +39,8 @@ class Game {
       // Card upcard = pack.deal_one();
       cout << upcard << " turned up" << endl;
       trump = upcard.get_suit();
-      int x_playersTurn=0;
       Suit ordered_up_suit;
-      make_trump(upcard, dealerIndex, players, x_playersTurn, ordered_up_suit);
-      // playHand(team_tricks_A, team_tricks_B, dealerIndex, trump);
-      // if (leadIndex > 3){
-      //   leadIndex = leadIndex - 4;
-      // }
+      make_trump(upcard, dealerIndex, players, ordered_up_suit);
       indexOfPrevWinner = 10;
       for (int i = 0; i < 5; i++){
         play_trick(dealerIndex, trump, team_points_A, team_points_B, indexOfPrevWinner);
@@ -56,33 +51,7 @@ class Game {
           team_tricks_B = team_tricks_B + 1;
         }
       }
-      if (team_tricks_A > team_tricks_B){
-        // print0Winners(team_tricks_A, ordered_up, team_points_A);
-        team_points_A = team_points_A + 1;
-        cout << player1 << " and " << player3 << " win the hand" << endl;
-        if (ordered_up % 2 != 0){
-          team_points_A = team_points_A + 1;
-          cout << "euchred!" << endl;
-        } 
-        else if (team_tricks_A == 5){
-          team_points_A = team_points_A + 1;
-          cout << "march!" << endl;
-        }
-      }
-      else if (team_tricks_B > team_tricks_A){
-        // print1Winners(team_tricks_B, ordered_up, team_points_B);
-        team_points_B = team_points_B + 1;
-        cout << player2 << " and " << player4 << " win the hand" << endl;
-        if (ordered_up % 2 != 0){
-          team_points_B = team_points_B + 1;
-          cout << "euchred!" << endl;
-        } 
-        else if (team_tricks_B == 5){
-          team_points_B = team_points_B + 1;
-          cout << "march!" << endl;
-        }
-      } 
-    } 
+      print_winners(team_tricks_A, team_tricks_B, team_points_A, team_points_B, ordered_up); 
       hand_round = hand_round + 1;
       dealerIndex = dealerIndex + 1;
       if (dealerIndex > 3) {//what does this thing mean --> {
@@ -101,6 +70,36 @@ class Game {
         cout << player2 << " and " << player4 << " win the hand" << endl;
       }
     }
+
+  void print_winners(int team_tricks_A, int team_tricks_B, 
+   int team_points_A, int team_points_B, int ordered_up){
+    if (team_tricks_A > team_tricks_B){
+    // print0Winners(team_tricks_A, ordered_up, team_points_A);
+      team_points_A = team_points_A + 1;
+      cout << players[0]->get_name() << " and " << players[2]->get_name() << " win the hand" << endl;
+      if (ordered_up % 2 != 0){
+        team_points_A = team_points_A + 1;
+        cout << "euchred!" << endl;
+      } 
+      else if (team_tricks_A == 5){
+        team_points_A = team_points_A + 1;
+        cout << "march!" << endl;
+      }
+    }
+    else if (team_tricks_B > team_tricks_A){
+      // print1Winners(team_tricks_B, ordered_up, team_points_B);
+      team_points_B = team_points_B + 1;
+      cout << players[1]->get_name() << " and " << players[3]->get_name() << " win the hand" << endl;
+      if (ordered_up % 2 != 0){
+        team_points_B = team_points_B + 1;
+        cout << "euchred!" << endl;
+      } 
+      else if (team_tricks_B == 5){
+        team_points_B = team_points_B + 1;
+        cout << "march!" << endl;
+      }
+    }
+  }
 
  private:
   std::vector<Player*> players;
@@ -156,7 +155,7 @@ class Game {
     upcard = pack1.deal_one();
 
   }
-  void make_trump(Card &upcard, int dealerIndex, vector<Player*> players, int x_playersTurn, Suit &ordered_up_suit){
+  void make_trump(Card &upcard, int dealerIndex, vector<Player*> players, Suit &ordered_up_suit){
     //Suit order_up_suit;
     bool is_dealer;
    // new Player currentPlayer; //= dealerIndex; //is dealer alwyas player 0? does it change with rounds?
@@ -177,7 +176,7 @@ class Game {
         }
         else if(players[currentPlayer]->make_trump(upcard, is_dealer, round, ordered_up_suit)==true && round==1){
           cout << players[currentPlayer]->get_name() << " orders up " << ordered_up_suit << endl;
-          x_playersTurn = currentPlayer;
+          // x_playersTurn = currentPlayer;
           
           //PRINT DEALERS HAND
           players[dealerIndex]->add_and_discard(upcard);
@@ -186,7 +185,7 @@ class Game {
         }
         else {//if(players[currentPlayer]->make_trump(upcard, is_dealer, round, ordered_up_suit)==true && round==2){
           cout << players[currentPlayer]->get_name() << " orders up " << ordered_up_suit << endl; //does my make trump account for dealer stuff? add tests abt it?
-          x_playersTurn = currentPlayer;
+          // x_playersTurn = currentPlayer;
           cout << "\n";
           return;
         }

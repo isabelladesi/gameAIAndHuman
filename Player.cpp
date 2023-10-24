@@ -274,8 +274,9 @@ class HumanPlayer : public Player{
         cout << "Human player " << player_name << ", please enter a suit, or \"pass\":\n";
         string decision;
         cin >> decision;
+        Suit ordered_up;
         if (decision != "pass") {
-            Suit ordered_up = string_to_suit(decision);
+            ordered_up = string_to_suit(decision);
             order_up_suit = ordered_up;
             return true;
         }

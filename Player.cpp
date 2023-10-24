@@ -200,7 +200,7 @@ class SimplePlayer : public Player{
         }
         // If a Simple Player can follow suit, they play the highest card that follows suit
         if (hasledSuit) {
-            Card highestledSuit(TWO, led_suit);
+            Card highestledSuit("TWO", led_suit);
             int highestcardindex = -1;
             for (int i = 0; i < hand.size(); i++) {
                 if (hand[i].get_suit(trump) == led_suit && Card_less(highestledSuit, hand[i], trump, led_card)) {
@@ -225,6 +225,10 @@ class SimplePlayer : public Player{
             hand.erase(hand.begin() + lowestledindex);
             return lowestledSuit;
         }
+    }
+    private:
+    const string player_name; 
+    vector<Card> hand;
 };
 
 ostream & operator<<(ostream &os, const Player &p) {
